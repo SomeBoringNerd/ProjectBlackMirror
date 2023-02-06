@@ -44,3 +44,7 @@ libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de 
 Le logiciel se compile via CMake (3.25 minimum).
 
 Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`
+
+=== Usage
+
+@TODO : écrire documentation pour expliquer comment utiliser le logiciel

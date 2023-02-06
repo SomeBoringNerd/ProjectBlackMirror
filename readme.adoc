@@ -6,7 +6,7 @@ Ce repos publique contient le code source des projets, en plus de diagrammes, po
 
 Ce repos contient le code source des programmes suivants : 
 
-[cols="~,~,~""]
+[cols="~,~,~"]
 |===
 
 | nom
@@ -21,14 +21,50 @@ Ce repos contient le code source des programmes suivants :
 | Logiciel en C permettant au serveur de demander a deux caméra IP de lui donner une image a traiter a intervalle régulière
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
+<<<<<<< Updated upstream
 | ClientQT
+=======
+| ORI-OCV-master
+| Logiciel de reconnaissance d'image en C++ permettant au serveur de reconnaitre une plaque d'immatriculation
+| SomeBoringNerd (contact : someboringnerd@gmail.com)
+
+| Projet-IHM-Plaque
+>>>>>>> Stashed changes
 | Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
 | Son GoK4RiO#7224 
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
-| Hergo (twitch.tv/Hergo)
+| Hergo (guilbert.cyrilpro@gmail.com)
+
+<<<<<<< Updated upstream
+=======
+| Arduino-Controller-master
+| permet a un Arduino de controller une barrière
+| Hergo (guilbert.cyrilpro@gmail.com)
+
+| wsServer et extra/ToyWS
+| Logiciel en C permettant de créer des websockets serveur / client
+| https://github.com/Theldus/wsServer (forké par SomeBoringNerd afin de l'adapter a notre usage)
 
 |===
 
+= Répartition des rôles
 
+[cols="~,~"]
+>>>>>>> Stashed changes
+|===
+
+| nom
+| roles
+
+| SomeBoringNerd
+| Création de la reconnaissance d'image, fork de wsServer et ToyWS, du logiciel de communication entre le serveur et le client, et du déploiment du serveur, rédaction des diagrammes
+
+| Son GoK4RiO
+| Création de l'implémentation du fork de ToyWS, création de l'interface homme / machine, rédactions des parties communes
+
+| Hergo
+| Création des logiciels de controle de l'écran du RaspBerryPI, du controle de la barrière via un Arduino, de la création de la base de donnée, et du MCD (Modèle Conceptuel des Données)
+
+|===
