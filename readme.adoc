@@ -1,0 +1,92 @@
+= Project BlackMirror
+
+Project BlackMirror est un système d'automatisation d'ouverture d'une barrière grâce a la plaque d'immatriculation d'un véhicule. Le projet a été fait dans le cadre des projets des classes de Terminale BTS SNIR, session 2022 -> 2023
+
+Ce repos publique contient le code source des projets, en plus de diagrammes, powerpoints et autre. Chaque dossier contient son propre readme.adoc pour expliquer son fonctionnement ou documenter nos rescources.
+
+Ce repos contient le code source des programmes suivants : 
+
+[cols="~,~,~""]
+|===
+
+| nom
+| description
+| auteur + contact
+
+| ServerClientComLib-master
+| Logiciel en C permettant au serveur et client de communiquer ensemble
+| SomeBoringNerd (contact : someboringnerd@gmail.com)
+
+| CamControl-master
+| Logiciel en C permettant au serveur de demander a deux caméra IP de lui donner une image a traiter a intervalle régulière
+| SomeBoringNerd (contact : someboringnerd@gmail.com)
+
+| ClientQT
+| Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
+| Son GoK4RiO#7224 
+
+| LED-Controller-master
+| permet a un RaspBerry PI de controller un système de LED Matrix
+| Hergo (twitch.tv/Hergo)
+
+|===
+
+=== Projet BlackMirror : Client
+
+[cols="~,~,~,~"]
+|===
+| Fonctions 
+| Usage 
+| Explications 
+| Notes supplémenataires
+
+| Connexion serveur-client 
+| dans `int main()` 
+| Permet de créer un webstocket qui va attendre une connexion d'un client 
+| N/A
+
+| `onMessageReceived(char* content, char **args[][])`
+| dans shared.c, appelé par le serveur au runtime
+| permet au serveur d'envoyer un message au client
+| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+
+| `onLogin(char* password, char* ip)`
+| dans server.c, appelé par le serveur quand une tentative de connexion est faite
+| permet au serveur d'envoyer packet d'authentification au client
+| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+
+| `sendMessage(char* content, char **args[][])`
+| dans shared.c, appelé par le serveur quand il doit communiquer avec le client
+| permet d'envoyer un packet avec un nom et des arguments
+| la vérification du contenu se fait par le client 
+
+|===
+
+=== Projet BlackMirror : Client
+
+[cols="~,~,~,~"]
+|===
+| Fonctions 
+| Usage 
+| Explications 
+| Notes supplémenataires
+
+| Connexion serveur-client 
+| dans client.c::`int login(char* ip, int port)` 
+| Permet de créer un webstocket qui va se connecter a un serveur via ip et port 
+| Le port change selon config du serveur
+
+| `sendMessage(char* content, char **args[][])`
+| dans shared.c, appelé par le client quand il doit communiquer avec le serveur
+| permet d'envoyer un packet avec un nom et des arguments
+| la vérification du contenu se fait par le serveur 
+
+| `onMessageReceived(char* content, char **args[][])`
+| dans shared.c, appelé par le client quand un message est reçu
+| permet au serveur d'envoyer packet d'authentification au client avec paramètres et arguments
+| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+
+|===
+
+=== Explication : Chapitre 1
+
