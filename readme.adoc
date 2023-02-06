@@ -33,6 +33,11 @@ Ce repos contient le code source des programmes suivants :
 | permet a un Arduino de controller une barrière
 | Hergo (twitch.tv/Hergo)
 
+| wsServer / ToyWS
+| Librairie pour créer des connexions websocket entre un serveur et client
+| https://github.com/Theldus
+
+
 |===
 
 
