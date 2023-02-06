@@ -21,12 +21,16 @@ Ce repos contient le code source des programmes suivants :
 | Logiciel en C permettant au serveur de demander a deux caméra IP de lui donner une image a traiter a intervalle régulière
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
-| ClientQT
+| Projet-IHM-Plaque
 | Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
 | Son GoK4RiO#7224 
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
+| Hergo (twitch.tv/Hergo)
+
+| Arduino-Controller-master
+| permet a un Arduino de controller une barrière
 | Hergo (twitch.tv/Hergo)
 
 |===
