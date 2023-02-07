@@ -6,7 +6,7 @@ Ce repos publique contient le code source des projets, en plus de diagrammes, po
 
 Ce repos contient le code source des programmes suivants : 
 
-[cols="~,~,~""]
+[cols="~,~,~"]
 |===
 
 | nom
@@ -41,3 +41,22 @@ Ce repos contient le code source des programmes suivants :
 |===
 
 
+Répartition des taches
+
+[cols="~,~,~"]
+|===
+
+| nom
+| taches
+
+| Son GoK4RiO : 
+| Client QT, rédaction des parties communes, créations des powerpoints
+
+| Hergo
+| Logiciels de controle de l'arduino, raspberry pi et gestion de la base de données
+
+
+| SomeBoringNerd
+| Système de reconnaissance de texte, fork de wsServer / ToyWS, logiciels serveur, création des diagrammes
+
+|===
