@@ -43,7 +43,7 @@ Ce repos contient le code source des programmes suivants :
 
 Répartition des taches
 
-[cols="~,~,~"]
+[cols="~,~"]
 |===
 
 | nom
