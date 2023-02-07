@@ -7,7 +7,7 @@
 
 // ip des deux caméras avec leur port
 // @todo : bouger ça dans un fichier de config
-char* ips[2] = {"192.168.26.74", "192.168.1.69"};
+char* ips[2] = {"192.168.0.0", "192.168.0.0"};
 
 /**
  * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible. Celle-ci est sauvegardée dans le dossier d'éxecution
@@ -20,7 +20,11 @@ int loop()
 {
     return 0;
 }
-
+/**
+ * Ping une addresse ip pour savoir si une caméra est sur le réseau local.
+ * 
+ * @param ip : ip de l'appareil a ping (duh)
+*/
 int pingCam(char* ip)
 {
     // tout ce bazard car je peux pas juste "texte " + ip + " texte"

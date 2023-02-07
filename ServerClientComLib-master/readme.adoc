@@ -4,38 +4,98 @@ Ce logiciel sert a gérer la partie serveur du projet.
 
 Il connecte l'IA, la base de donnée, le client et les micro-controllers divers (Arduino, RaspBerry PI).
 
-Choix du langage : C, car il s'agit du plus performant et ne dispose pas de fonctionalités superflues comme le C++ (bonjour STDLib)
+Choix du langage : C, car il s'agit du plus performant et ne dispose pas de fonctionalités superflues comme le C++ (comme l'orienté object qui est ici innutile)
 
 libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de l'adapter a nos besoins
 
 === Projet BlackMirror : Informations en bloc
+==== main.c
 
-[cols="~,~,~,~"]
+Main.c est le coeur du programme, il fonctionne sur le serveur et gère toutes les parties mouvante sur le serveur,
+
+allant de la base de données a la reconnaissance de texte, du controle réseau et bien plus encore.
+
+===== Fonctions
+[cols="~,~,~"]
 |===
-| Fonctions 
-| Usage 
+| nom complet 
 | Explications 
-| Notes supplémenataires
+| Paramètres
 
-| Connexion serveur-client 
-| dans `int main()` 
-| Permet de créer un webstocket qui va attendre une connexion d'un client 
+| `int main()`
+| première fonction a s'éxecuter, initialise le logger, le serveur websocket, et ping les différents appareils réseaux requis.
 | N/A
 
-| `onMessageReceived(char* content, char **args[][])`
-| appelé par le serveur au runtime
-| permet au serveur d'envoyer un message au client
-| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+| `int pingCam(char* ip)`
+| Ping une addresse ip pour savoir si une caméra est sur le réseau local.
+| ip : ip de l'appareil a ping (duh)
 
-| `onLogin(char* password, char* ip)`
-| appelé par le serveur quand une tentative de connexion est faite
+| `int loop()`
 | permet au serveur d'envoyer packet d'authentification au client
 | Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
 
-| `sendMessage(char* content, char **args[][])`
-| appelé par le serveur quand il doit communiquer avec le client
-| permet d'envoyer un packet avec un nom et des arguments
-| la vérification du contenu se fait par le client 
+|===
+
+===== Variables
+[cols="~,~,~"]
+|===
+| Fonctions 
+| Explications 
+| Default
+
+| `char* ips[2]`
+| Array de deux addresses ip, celles des caméras de surveillances.
+| {"192.168.0.0", "192.168.0.0"}
+
+|===
+
+==== logger.h
+
+Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du serveur et le client QT.
+
+===== Fonctions
+[cols="~,~,~"]
+|===
+| nom complet 
+| Explications 
+| Paramètres
+
+| `int initLogger(char* appname)`
+| Fonction appelée avant usage du logger pour créer le dossier des logs et le fichier texte.
+| appanme : nom de l'application. Controle le nom du dossier et donc le chemin des logs.
+
+| `int toFile(char *texte)`
+| Envoie un string de texte formaté sans couleur dans le fichier de logs et le print dans la console au passage.
+| texte : texte a logger (duh)
+
+| `void Log(char *texte)`
+| Ajoute un string dans les logs
+| texte : texte a logger (duh)
+
+| `void LogError(char *texte)`
+| Avertis l'utilisateur qu'il y'a une erreur critique dans le programme (une qui empêche l'execution du programme)
+| texte : texte a logger (duh)
+
+| `void LogWarning(char *texte)`
+| Avertis l'utilisateur qu'il y'a une erreur non critique dans le programme (une qui n'empêche pas l'execution du programme)
+| texte : texte a logger (duh)
+
+|===
+
+===== Variables
+[cols="~,~,~"]
+|===
+| Fonctions 
+| Explications 
+| Default
+
+| `FILE *_log`
+| Pointeur vers le fichier .txt comportant les logs de l'application.
+| N/A
+
+| `char* name`
+| Nom de l'application, pour le nom des dossiers de logs
+| N/A
 
 |===
 
@@ -43,4 +103,6 @@ libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de 
 
 Le logiciel se compile via CMake (3.25 minimum).
 
-Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`
+Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`.
+
+Déplacez l'executable dans un dossier avec les logiciels "CamControl-master" et "ARI-Plaques"
