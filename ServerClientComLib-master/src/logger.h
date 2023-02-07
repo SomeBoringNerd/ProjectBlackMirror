@@ -5,13 +5,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *name;
+char *_name;
 
 FILE *_log;
 
 int initLogger(char* appname)
 {
-    name = appname;
+    _name = appname;
     
     char buffer[128];
     #ifdef __unix__
@@ -28,9 +28,8 @@ int initLogger(char* appname)
     system(_buffer);
     #endif
     
-
     char file[256];
-    snprintf(file, sizeof(file), "./%s/log.txt", name);
+    snprintf(file, sizeof(file), "./%s/log.txt", _name);
 
     _log = fopen(file, "w");
     return 0;

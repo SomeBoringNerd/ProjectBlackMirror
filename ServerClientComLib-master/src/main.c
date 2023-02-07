@@ -3,10 +3,21 @@
 #include <threads.h>
 #include <sys/wait.h>
 #include <string.h>
+
+
 #include "logger.h"
 
+#include "include/ws.h"
+
+/********************************************************************
+
+                    todos
+
+            -> bouger ips, port et plus encore dans un fichier de config
+
+*********************************************************************/
+
 // ip des deux caméras avec leur port
-// @todo : bouger ça dans un fichier de config
 char* ips[2] = {"192.168.0.0", "192.168.0.0"};
 
 /**
@@ -49,35 +60,95 @@ int pingCam(char* ip)
         return ping_ret;
     }
 }
+/********************************************************************
+
+                    gestion des events du websocket
+
+*********************************************************************/
+/**
+ * @brief This function is called whenever a new connection is opened.
+ * @param client Client connection.
+ */
+void onopen(ws_cli_conn_t *client)
+{
+    char *cli;
+    cli = ws_getaddress(client);
+    printf("Connection opened, addr: %s\n", cli);
+}
+
+/**
+ * @brief This function is called whenever a connection is closed.
+ * @param client Client connection.
+ */
+void onclose(ws_cli_conn_t *client)
+{
+    char *cli;
+    cli = ws_getaddress(client);
+    printf("Connection closed, addr: %s\n", cli);
+}
+
+/**
+ * @brief Message events goes here.
+ * @param client Client connection.
+ * @param msg    Message content.
+ * @param size   Message size.
+ * @param type   Message type.
+ */
+void onmessage(ws_cli_conn_t *client, const unsigned char *msg, uint64_t size, int type)
+{
+    char *cli;
+    cli = ws_getaddress(client);
+    printf("I receive a message: %s (%zu), from: %s\n", msg,
+        size, cli);
+
+    sleep(2);
+    ws_sendframe_txt(client, "hello");
+    sleep(2);
+    ws_sendframe_txt(client, "world");
+}
+
+/********************************************************************
+
+                        fin events du socket
+
+*********************************************************************/
 
 int main()
 {
     initLogger("ServerSoftware");
 // système simple pour savoir si les cams sont en ligne
 
-    int cam1 = pingCam(ips[0]);
-    int cam2 = pingCam(ips[1]);
+    int ignoreCamResult = 1;
 
     system("clear");
+    if(!ignoreCamResult){
 
-    if(!cam1)
-        Log("ping cam 1 réussi");
-    else{
-        LogError("ping cam 1 échoué");
-        return 1;
+        int cam1 = pingCam(ips[0]);
+        int cam2 = pingCam(ips[1]);
+
+        if(!cam1)
+            Log("ping cam 1 réussi");
+        else{
+            LogError("ping cam 1 échoué");
+            return 1;
+        }
+        
+        if(!cam2)
+            Log("ping cam 2 réussi");
+        else{
+            LogError("ping cam 2 échoué");
+            return 1;
+        }
     }
-    
-    if(!cam2)
-        Log("ping cam 2 réussi");
-    else{
-        LogError("ping cam 2 échoué");
-        return 1;
-    }
-    // création des threads
+    // création / gestion des threads
 
-    // démarage des threads
+    // lancement du serveur websocket via notre fork de wsServer
+    struct ws_events evs;
+    evs.onopen    = &onopen;
+    evs.onclose   = &onclose;
+    evs.onmessage = &onmessage;
 
-    // lancement du serveur websocket via wsServer
+    ws_socket(&evs, 1337, 0, 1000);
 
     return 0;
 }
