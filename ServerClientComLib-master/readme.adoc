@@ -31,7 +31,7 @@ allant de la base de données a la reconnaissance de texte, du controle réseau 
 | ip : ip de l'appareil a ping (duh)
 
 | `int loop()`
-| permet au serveur d'envoyer packet d'authentification au client
+| permet au serveur d'envoyer des packets au client si il est connecté
 | Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
 
 |===
