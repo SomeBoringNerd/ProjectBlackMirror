@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+ws_cli_conn_t *client;
+int isClientLoggedIn = 0;
+
 void initWebSocket()
 {
     struct ws_events evs;
@@ -16,6 +19,7 @@ void initWebSocket()
     ws_socket(&evs, 1337, 0, 1000);
 }
 
+
 /********************************************************************
 
                     gestion des events du websocket
@@ -25,22 +29,26 @@ void initWebSocket()
  * @brief This function is called whenever a new connection is opened.
  * @param client Client connection.
  */
-void onopen(ws_cli_conn_t *client)
+void onopen(ws_cli_conn_t *_client)
 {
+    client = _client;
+    isClientLoggedIn = true;
     char *cli;
     cli = ws_getaddress(client);
-    printf("Connection opened, addr: %s\n", cli);
+    Log("Connection opened, addr: %s\n", cli);
 }
 
 /**
  * @brief This function is called whenever a connection is closed.
  * @param client Client connection.
  */
-void onclose(ws_cli_conn_t *client)
+void onclose(ws_cli_conn_t *_client)
 {
     char *cli;
+    isClientLoggedIn = false;
+    client = NULL;
     cli = ws_getaddress(client);
-    printf("Connection closed, addr: %s\n", cli);
+    Log("Connection closed, addr: %s\n", cli);
 }
 
 /**
@@ -50,7 +58,7 @@ void onclose(ws_cli_conn_t *client)
  * @param size   Message size.
  * @param type   Message type.
  */
-void onmessage(ws_cli_conn_t *client, const unsigned char *msg[10][128], uint64_t size, int type)
+void onmessage(ws_cli_conn_t *_client, const unsigned char *msg[10][128], uint64_t size, int type)
 {
     char *cli;
     cli = ws_getaddress(client);

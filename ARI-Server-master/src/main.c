@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <threads.h>
+#include <pthread.h>
 #include <sys/wait.h>
 #include <string.h>
 
@@ -29,10 +29,31 @@ char* ips[2] = {"192.168.0.0", "192.168.0.0"};
  * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible. Celle-ci est sauvegardée dans le dossier d'éxecution
  * 
  * @param ip : IP de la caméra
- * @return le succès de la demande. 0 = echec, 1 = succès
+ * @return rien normalement
 */
-int loop()
+int loop(char *ip)
 {
+    while(true)
+    {
+        char* message = "";
+        // si la caméra est en ligne
+        if(!pingCam(ip))
+        {
+            sprintf(message, sizeof(message), "%s est hors ligne, je ne peux pas assurer le fonctionnement du système donc je vais demander de l'aide au client", ip);
+            ws_sendframe_txt(client, "WARNING_EXCEPTION_NO_CAM_FOUND");
+            LogError(message);
+            break;
+        }
+        else if(!fetchFromCam(ip))
+        {
+            sprintf(message, sizeof(message), "Je n'ai pas pu obtenir une image de %s", ip);
+            LogError(message);
+            break;
+        }
+
+        sprintf(message, sizeof(message), "Image obtenue de %s", ip);
+        Log(message);
+    }
     return 0;
 }
 
@@ -66,7 +87,14 @@ int main()
     }
     // création / gestion des threads
 
-    Log("Création du thread image");
+    Log("Création des thread image");
+    pthread_t camUn, camDeux;
+    pthread_create(&camUn, NULL, loop, &ips[0]);
+    pthread_create(&camDeux, NULL, loop, &ips[1]);
+
+    pthread_join(camUn, (void**)NULL);
+    pthread_join(camDeux, (void**)NULL);
+
 
     // lancement du serveur websocket via notre fork de wsServer
 

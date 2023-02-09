@@ -28,7 +28,7 @@
 */
 int fetchFromCam(char *ip)
 {
-    
+    return 0;
 }
 
 /**
@@ -41,19 +41,22 @@ int pingCam(char* ip)
 {
     char commande[128];
 
-    snprintf(commande, sizeof(commande), "ping -c 1 %s -W 1 -q", ip);
+    // on va essayer de ping l'ip passée une fois
 
-    // check commande marche
+    //ceci est un hack car en C et C++ on ne peut pas additionner de strings.
+    //  "> nul" permet de ne pas avoir d'output, ce qui peut vite remplir les logs
+    snprintf(commande, sizeof(commande), "ping -c 1 %s -W 1 -q  > nul", ip);
+
+    // check le succès de la commande
     int status = system(commande);  
 
-    // a ce niveau là on peut free.
+    // une fois la commande éxecutée on peut la free pour éviter une fuite de mémoire
     free(commande);
 
     if (-1 != status) 
-    { 
-        // 0 : ping marche
-        // 1 : ping échoué
-        
+    {         
+        // on retourne l'inverse de WEXITSTATUS (car 0 = succès, mais en C, 0 == false)
+        // donc en inversant le status, on retourne 1 si le ping est répondu, 0 si time out
         int ping_ret = WEXITSTATUS(status); 
         return !ping_ret;
     }
