@@ -13,12 +13,8 @@ Ce repos contient le code source des programmes suivants :
 | description
 | auteur + contact
 
-| ServerClientComLib-master
+| ARI-Server
 | Logiciel en C permettant au serveur et client de communiquer ensemble
-| SomeBoringNerd (contact : someboringnerd@gmail.com)
-
-| CamControl-master
-| Logiciel en C permettant au serveur de demander a deux caméra IP de lui donner une image a traiter a intervalle régulière
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
 | ARI-Plaques
@@ -38,7 +34,7 @@ Ce repos contient le code source des programmes suivants :
 | Hergo (twitch.tv/Hergo)
 
 | wsServer / ToyWS
-| Librairie pour créer des connexions websocket entre un serveur et client
+| Librairie pour créer des connexions websocket entre un serveur et client que nous avons forké pour nos besoins.
 | https://github.com/Theldus
 
 

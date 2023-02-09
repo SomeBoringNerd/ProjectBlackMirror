@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef HEADER_LOGGER
+#define HEADER_LOGGER
 
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +9,11 @@ char *_name;
 
 FILE *_log;
 
+/**
+ * Je présente mes plus sincères excuses a ceux qui ont une meilleure idée de comment faire ça
+ * 
+ * @param appname : nom de l'application, doit être unique
+*/
 int initLogger(char* appname)
 {
     _name = appname;
@@ -35,7 +40,7 @@ int initLogger(char* appname)
     return 0;
 }
 
-int toFile(char *texte)
+void toFile(char *texte)
 {
     printf(texte);
     fprintf(_log, texte);
