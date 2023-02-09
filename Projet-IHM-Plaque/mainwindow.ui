@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>468</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>421</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>460</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ajouter</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="listWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>20</y>
+        <width>161</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Caméra 2</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>460</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ouvrir</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>180</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Nombre de place restante :  </string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>280</y>
+        <width>381</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <row>
+       <property name="text">
+        <string>M.Dupont</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>M.Reynolds</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>Mme.Hubbard</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>Horaire entrée / sortie</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>entree / sortie</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="background">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </property>
+      </item>
+     </widget>
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>161</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Caméra 1</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>240</y>
+        <width>251</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>dernière entrée / sortie</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2"/>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>468</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
