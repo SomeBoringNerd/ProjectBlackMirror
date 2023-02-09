@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include "logger.h"
 #include "QMessageBox"
+#include "Qtstring"
+#include <qsqlquery>
+#include <QSqlDatabase>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,6 +24,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QMessageBox::setInformativeText("La barrière a bien été ouverte");
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+void MainWindow::on_textEdit_copyAvailable(bool b)
+{
+
 }
 

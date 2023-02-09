@@ -20,6 +20,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -38,6 +39,14 @@ public:
     QListWidget *listWidget;
     QLabel *label_2;
     QWidget *page_2;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QTextEdit *textEdit;
+    QTextEdit *textEdit_2;
+    QTextEdit *textEdit_3;
+    QPushButton *pushButton_3;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -98,6 +107,30 @@ public:
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
+        label_3 = new QLabel(page_2);
+        label_3->setObjectName("label_3");
+        label_3->setGeometry(QRect(130, 30, 131, 51));
+        label_4 = new QLabel(page_2);
+        label_4->setObjectName("label_4");
+        label_4->setGeometry(QRect(40, 160, 63, 20));
+        label_5 = new QLabel(page_2);
+        label_5->setObjectName("label_5");
+        label_5->setGeometry(QRect(40, 210, 63, 20));
+        label_6 = new QLabel(page_2);
+        label_6->setObjectName("label_6");
+        label_6->setGeometry(QRect(50, 279, 181, 41));
+        textEdit = new QTextEdit(page_2);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(90, 160, 211, 31));
+        textEdit_2 = new QTextEdit(page_2);
+        textEdit_2->setObjectName("textEdit_2");
+        textEdit_2->setGeometry(QRect(100, 210, 211, 31));
+        textEdit_3 = new QTextEdit(page_2);
+        textEdit_3->setObjectName("textEdit_3");
+        textEdit_3->setGeometry(QRect(240, 290, 151, 31));
+        pushButton_3 = new QPushButton(page_2);
+        pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setGeometry(QRect(170, 410, 83, 29));
         stackedWidget->addWidget(page_2);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -110,7 +143,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -152,6 +185,11 @@ public:
         listWidget->setSortingEnabled(__sortingEnabled2);
 
         label_2->setText(QCoreApplication::translate("MainWindow", "derni\303\250re entr\303\251e / sortie", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">Ajouter</span></p></body></html>", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "Nom", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Pr\303\251nom", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Plaque d'immatriculation :", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Enregistrer", nullptr));
     } // retranslateUi
 
 };

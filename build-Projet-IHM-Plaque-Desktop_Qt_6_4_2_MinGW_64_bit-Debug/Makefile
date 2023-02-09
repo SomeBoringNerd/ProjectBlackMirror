@@ -343,6 +343,7 @@ Makefile: ../Projet-IHM-Plaque/Projet-IHM-Plaque.pro C:/Qt/6.4.2/mingw_64/mkspec
 		../Projet-IHM-Plaque/Projet-IHM-Plaque.pro \
 		C:/Qt/6.4.2/mingw_64/lib/Qt6Widgets.prl \
 		C:/Qt/6.4.2/mingw_64/lib/Qt6Gui.prl \
+		C:/Qt/6.4.2/mingw_64/lib/Qt6Sql.prl \
 		C:/Qt/6.4.2/mingw_64/lib/Qt6Core.prl \
 		C:/Qt/6.4.2/mingw_64/lib/Qt6EntryPoint.prl \
 		C:/Qt/6.4.2/mingw_64/mkspecs/features/build_pass.prf
@@ -620,6 +621,7 @@ C:/Qt/6.4.2/mingw_64/mkspecs/features/lex.prf:
 ../Projet-IHM-Plaque/Projet-IHM-Plaque.pro:
 C:/Qt/6.4.2/mingw_64/lib/Qt6Widgets.prl:
 C:/Qt/6.4.2/mingw_64/lib/Qt6Gui.prl:
+C:/Qt/6.4.2/mingw_64/lib/Qt6Sql.prl:
 C:/Qt/6.4.2/mingw_64/lib/Qt6Core.prl:
 C:/Qt/6.4.2/mingw_64/lib/Qt6EntryPoint.prl:
 C:/Qt/6.4.2/mingw_64/mkspecs/features/build_pass.prf:

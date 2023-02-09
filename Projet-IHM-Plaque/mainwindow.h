@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtSql/QSqlDatabase>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,8 +19,13 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_textEdit_copyAvailable(bool b);
+
 private:
     Ui::MainWindow *ui;
+    QSqlDatabase database;
 };
 #endif // MAINWINDOW_H
 
