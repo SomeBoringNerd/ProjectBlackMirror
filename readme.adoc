@@ -13,58 +13,50 @@ Ce repos contient le code source des programmes suivants :
 | description
 | auteur + contact
 
-| ServerClientComLib-master
+| ARI-Server
 | Logiciel en C permettant au serveur et client de communiquer ensemble
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
-| CamControl-master
-| Logiciel en C permettant au serveur de demander a deux caméra IP de lui donner une image a traiter a intervalle régulière
-| SomeBoringNerd (contact : someboringnerd@gmail.com)
-
-<<<<<<< Updated upstream
-| ClientQT
-=======
-| ORI-OCV-master
-| Logiciel de reconnaissance d'image en C++ permettant au serveur de reconnaitre une plaque d'immatriculation
+| ARI-Plaques
+| Logiciel en (a réfléchir) permettant au serveur de reconnaitre une plaque d'immatriculation sur une photo.
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
 | Projet-IHM-Plaque
->>>>>>> Stashed changes
 | Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
 | Son GoK4RiO#7224 
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
-| Hergo (guilbert.cyrilpro@gmail.com)
+| Hergo (twitch.tv/Hergo)
 
-<<<<<<< Updated upstream
-=======
 | Arduino-Controller-master
 | permet a un Arduino de controller une barrière
-| Hergo (guilbert.cyrilpro@gmail.com)
+| Hergo (twitch.tv/Hergo)
 
-| wsServer et extra/ToyWS
-| Logiciel en C permettant de créer des websockets serveur / client
-| https://github.com/Theldus/wsServer (forké par SomeBoringNerd afin de l'adapter a notre usage)
+| wsServer / ToyWS
+| Librairie pour créer des connexions websocket entre un serveur et client que nous avons forké pour nos besoins.
+| https://github.com/Theldus
+
 
 |===
 
-= Répartition des rôles
+
+Répartition des taches :
 
 [cols="~,~"]
->>>>>>> Stashed changes
 |===
 
 | nom
-| roles
+| taches
 
-| SomeBoringNerd
-| Création de la reconnaissance d'image, fork de wsServer et ToyWS, du logiciel de communication entre le serveur et le client, et du déploiment du serveur, rédaction des diagrammes
-
-| Son GoK4RiO
-| Création de l'implémentation du fork de ToyWS, création de l'interface homme / machine, rédactions des parties communes
+| Son GoK4RiO : 
+| Client QT, rédaction des parties communes, créations des powerpoints
 
 | Hergo
-| Création des logiciels de controle de l'écran du RaspBerryPI, du controle de la barrière via un Arduino, de la création de la base de donnée, et du MCD (Modèle Conceptuel des Données)
+| Logiciels de controle de l'arduino, raspberry pi et gestion de la base de données
+
+
+| SomeBoringNerd
+| Système de reconnaissance de texte, fork de wsServer / ToyWS, logiciels serveur, création des diagrammes
 
 |===
