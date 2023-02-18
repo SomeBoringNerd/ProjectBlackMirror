@@ -7,7 +7,7 @@
 
 char *name;
 
-FILE *log;
+FILE *_log;
 
 int initLogger(char* appname)
 {
@@ -19,27 +19,29 @@ int initLogger(char* appname)
     system(buffer);
     #else
     // pourquoi windows permet pas de faire une commande après l'autre comme linux ?
-    char 2buffer[128];
+    char _buffer[128];
 
     snprintf(buffer, sizeof(buffer), "mkdir %s", appname);
-    snprintf(2buffer, sizeof(2buffer), "type nul >> %s/log.txt", appname);
+    snprintf(_buffer, sizeof(_buffer), "type nul >> %s/log.txt", appname);
     
     system(buffer);
-    system(2buffer);
+    system(_buffer);
     #endif
     
 
     char file[256];
     snprintf(file, sizeof(file), "./%s/log.txt", name);
 
-    log = fopen(file, "w");
+    _log = fopen(file, "w");
     return 0;
 }
 
 int toFile(char *texte)
 {
     printf(texte);
-    fprintf(log, texte);
+    fprintf(_log, texte);
+
+    return 0;
 }
 
 void Log(char *texte)
