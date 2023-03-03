@@ -9,16 +9,23 @@
 ws_cli_conn_t *client;
 int isClientLoggedIn = 0;
 
-void initWebSocket()
+
+int port = 34;
+
+
+/********************************************************************
+
+		Base de donnée et autre joyeusetées
+
+*********************************************************************/
+
+/**
+ * @brief Valide la connexion au serveur. 
+ */ 
+void Login(char* username, char* password)
 {
-    struct ws_events evs;
-    evs.onopen    = &onopen;
-    evs.onclose   = &onclose;
-    evs.onmessage = &onmessage;
-
-    ws_socket(&evs, 1337, 0, 1000);
+	
 }
-
 
 /********************************************************************
 
@@ -26,20 +33,23 @@ void initWebSocket()
 
 *********************************************************************/
 /**
- * @brief This function is called whenever a new connection is opened.
- * @param client Client connection.
+ * @brief Appelé quand une connexion est effecutée
+ * @param client : connexion
  */
 void onopen(ws_cli_conn_t *_client)
 {
+    // Si le client est déjà connecté on ne va pas accepter une connexion
+    if(client != NULL) return;
+
     client = _client;
     isClientLoggedIn = true;
     char *cli;
     cli = ws_getaddress(client);
-    Log("Connection opened, addr: %s\n", cli);
+    Log("Connection opened\n");
 }
 
 /**
- * @brief This function is called whenever a connection is closed.
+ * @brief Appelé quand le client se deconnecte
  * @param client Client connection.
  */
 void onclose(ws_cli_conn_t *_client)
@@ -48,23 +58,37 @@ void onclose(ws_cli_conn_t *_client)
     isClientLoggedIn = false;
     client = NULL;
     cli = ws_getaddress(client);
-    Log("Connection closed, addr: %s\n", cli);
+    Log("Connection closed, addr\n");
 }
 
 /**
- * @brief Message events goes here.
- * @param client Client connection.
- * @param msg    Message content.
- * @param size   Message size.
- * @param type   Message type.
+ * @brief S'execute quand le serveur reçoit un message
+ * @param client : Connexion
+ * @param msg    Contenu du message
  */
-void onmessage(ws_cli_conn_t *_client, const unsigned char *msg[10][128], uint64_t size, int type)
+void onmessage(ws_cli_conn_t *_client, const unsigned char msg, uint64_t size, int type)
 {
-    char *cli;
-    cli = ws_getaddress(client);
+    char *cli, *con_ip;
+    con_ip = ws_getaddress(_client);
+    cli =    ws_getaddress(client);
 
-    ws_sendframe_txt(client, "hello");
+    if(cli != con_ip) return;
+
+    if(msg == "test_comm")
+    {
+	Log("Message reçu du client");
+    }
 }
 
+
+void initWebSocket()
+{
+    struct ws_events evs;
+    evs.onopen    = &onopen;
+    evs.onclose   = &onclose;
+    evs.onmessage = &onmessage;
+
+    ws_socket(&evs, port, 0, 1000);
+}
 
 #endif

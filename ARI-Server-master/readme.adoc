@@ -103,6 +103,15 @@ Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du
 
 Le logiciel se compile via CMake (3.25 minimum).
 
-Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`.
+Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ARI-Server`.
 
 Déplacez l'executable dans un dossier avec les logiciels "CamControl-master" et "ARI-Plaques"
+
+=== Déploiment
+
+Construire l'image docker :
+`sudo docker build . -t pbm/serveur-soft`
+
+La lancer : 
+`sudo docker run pbm/serveur-soft:latest`
+cela va automatiquement installer toutes les dépendances, compiler le logiciel et le lancer

@@ -50,9 +50,6 @@ int pingCam(char* ip)
     // check le succès de la commande
     int status = system(commande);  
 
-    // une fois la commande éxecutée on peut la free pour éviter une fuite de mémoire
-    free(commande);
-
     if (-1 != status) 
     {         
         // on retourne l'inverse de WEXITSTATUS (car 0 = succès, mais en C, 0 == false)

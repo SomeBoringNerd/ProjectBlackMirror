@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd ../
+
 # supprime ancien dossier de build et le refait
 rm -rf build
 mkdir build

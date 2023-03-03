@@ -27,16 +27,6 @@
 #include <time.h>
 #include <sys/time.h>
 
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <netinet/in.h>
-#include <net/if.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-
 /* clang-format off */
 #ifndef _WIN32
 #include <arpa/inet.h>
@@ -1700,8 +1690,7 @@ int ws_socket(struct ws_events *evs, uint16_t port, int thread_loop,
 	listen(*sock, MAX_CLIENTS);
 
 	/* Wait for incoming connections. */
-
-	printf("en attente de connexion sur le port %i\n", port);
+	printf("Waiting for incoming connections...\n");
 	memset(client_socks, -1, sizeof(client_socks));
 
 	/* Accept connections. */
