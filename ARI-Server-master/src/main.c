@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <sys/wait.h>
 #include <string.h>
-
+#include <unistd.h>
 
 #include "logger.h"
 #include "camControl.h"
@@ -21,6 +21,8 @@
                                  N/A
 
 *********************************************************************/
+
+#define DEBUG 1
 
 // ip des deux caméras avec leur port
 char* ips[2] = {"192.168.0.0", "192.168.0.1"};
@@ -41,7 +43,7 @@ static void * loop(void * data)
 {
     int _ip = (int)data;
     char* message = malloc(sizeof(char) * 256);
-    while(doit_exit == 1)
+    while(doit_exit)
     {
         if(isClientLoggedIn)
         {
@@ -49,13 +51,13 @@ static void * loop(void * data)
             if(!pingCam(ips[_ip]))
             {
                 sprintf(message, "%s est hors ligne, je ne peux pas assurer le fonctionnement du système donc je vais demander de l'aide au client", ips[_ip]);
-                ws_sendframe_txt(client, "WARNING_EXCEPTION_NO_CAM_FOUND");
+                send("WARNING_EXCEPTION_NO_CAM_FOUND");
                 LogError(message);
             }
             else if(!fetchFromCam(ips[_ip]))
             {
                 sprintf(message, sizeof(message), "Je n'ai pas pu obtenir une image de %s", ips[_ip]);
-                ws_sendframe_txt(client, "ERROR_COULDNT_GET_IMAGE");
+                send("ERROR_COULDNT_GET_IMAGE");
                 LogError(message);
                 break;
             }else
@@ -68,25 +70,34 @@ static void * loop(void * data)
                 Log("Un thread vient d'être supprimé");
                 pthread_exit(0);
             }
-            printf("doit_exit = %d", doit_exit);
-
         }
     }
     LogWarning("Un thread vient d'être supprimé");
-    free(message);
     return 0;
 }
 
 int main()
 {
+    // Lors du debug, j'ai vu que WSserver a besoin d'être executé en root
+    // mais ça empêche le dossier du logger d'être supprimé
+    // @TODO : faire en sorte que le dossier des logs n'appartienne pas a root
+    if(getuid())
+    {
+        printf("\033[0;31m");
+        printf(" [ERROR] CE LOGICIEL DOIT ÊTRE LANCÉ EN ROOT");
+        printf("\n\033[0;0m");
+        return 1;
+    }
     initLogger("ServerSoftware");
-    // système simple pour savoir si les cams sont en ligne
+    
 
-    int ignoreCamResult = 1;
     doit_exit = 1;
     system("clear");
-    if(!ignoreCamResult){
 
+    // système simple pour savoir si les cams sont en ligne
+
+    if(!DEBUG)
+    {
         int cam1 = pingCam(ips[0]);
         int cam2 = pingCam(ips[1]);
 
@@ -108,7 +119,7 @@ int main()
             return 1;
         }
     }else{
-        LogWarning("LE LOGICIEL EST EN MODE DEBUG !");
+        LogWarning("LE LOGICIEL EST EN MODE DEBUG ! SI VOUS ÊTES SUR LE SERVEUR DE PROD VEUILLEZ CHANGER LA VARIABLE DEBUG DE 1 A 0 !!!!!!!!!!");
     }
     // création / gestion des threads
 
@@ -118,11 +129,13 @@ int main()
 
     if(t1){
         Log("thread 1 n'a pas pu être créé");
+        return 1;
     }
     
     int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
     if(t2){
         Log("thread 2 n'a pas pu être créé");
+        return 1;
     }
 
     Log("Lancement du serveur websocket");

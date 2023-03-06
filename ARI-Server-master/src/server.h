@@ -42,6 +42,7 @@ void onopen(ws_cli_conn_t *_client)
     if(client != NULL) return;
 
     client = _client;
+
     isClientLoggedIn = true;
     char *cli;
     cli = ws_getaddress(client);
@@ -76,10 +77,20 @@ void onmessage(ws_cli_conn_t *_client, const unsigned char msg, uint64_t size, i
 
     if(msg == "test_comm")
     {
-	Log("Message reçu du client");
+	    Log("Message reçu du client");
     }
 }
-
+/**
+ * @brief Wrapper de la fonction ws_sendframe_txt avec un check pour savoir si le client est connecté
+ * @param message : message a envoyer au client actif
+*/
+void send(char * message)
+{
+    if(client != NULL || !isClientLoggedIn)
+    {
+        ws_sendframe_txt(client, message);
+    }
+}
 
 void initWebSocket()
 {
