@@ -1,0 +1,9 @@
+= Project BlackMirror : API Base De donnée
+
+Système d'api en Express.JS pour offrir un accès sécurisé a la base de donnée peu importe comment c'est implémenté dans le client ou le serveur.
+
+=== Déploiment : 
+====== via scripts
+
+
+====== via docker (WIP)

@@ -1,4 +1,6 @@
 **/build/**
 **/build-Projet-IHM-Plaque-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/**
 **/.vscode/**
-**/.idea/**
+**/.idea
+
+**/node_modules/**
