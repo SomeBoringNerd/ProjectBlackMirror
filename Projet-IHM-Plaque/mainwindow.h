@@ -19,9 +19,18 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
 
     void on_textEdit_copyAvailable(bool b);
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_Ouvrir_Menu_clicked();
+
+    void on_textEdit_nom_ajouter_copyAvailable(bool b);
+
+    void on_pushButton_2_Ajouter_Menu_clicked();
+
+    void on_pushButton_Annuler_Ajouter_clicked();
 
 private:
     Ui::MainWindow *ui;

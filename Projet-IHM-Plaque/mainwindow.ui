@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
+    <width>469</width>
     <height>600</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>10</y>
+      <x>30</x>
+      <y>0</y>
       <width>421</width>
       <height>531</height>
      </rect>
@@ -27,11 +27,11 @@
      <number>1</number>
     </property>
     <widget class="QWidget" name="page">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButton_2_Ajouter_Menu">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>460</y>
+        <x>160</x>
+        <y>480</y>
         <width>83</width>
         <height>29</height>
        </rect>
@@ -55,11 +55,11 @@
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButton_Ouvrir_Menu">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>460</y>
+        <x>30</x>
+        <y>480</y>
         <width>83</width>
         <height>29</height>
        </rect>
@@ -134,7 +134,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
+        <y>20</y>
         <width>161</width>
         <height>141</height>
        </rect>
@@ -155,7 +155,33 @@
        </rect>
       </property>
       <property name="text">
-       <string>dernière entrée / sortie</string>
+       <string>dernière entrée / sortie : </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4_Signaler_Menu">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>480</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Signaler</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>210</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Total de place : 63</string>
       </property>
      </widget>
     </widget>
@@ -202,8 +228,8 @@
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>279</y>
+        <x>20</x>
+        <y>430</y>
         <width>181</width>
         <height>41</height>
        </rect>
@@ -212,47 +238,171 @@
        <string>Plaque d'immatriculation :</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QPushButton" name="pushButton_3_enregistrer">
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>160</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="textEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>210</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>290</y>
-        <width>151</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>410</y>
+        <y>490</y>
         <width>83</width>
         <height>29</height>
        </rect>
       </property>
       <property name="text">
        <string>Enregistrer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>260</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Travail du personnel :</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>390</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Du</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_Enseignant_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>290</y>
+        <width>111</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Enseignants</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_2_Admin_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>290</y>
+        <width>131</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Administration</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_3_Autres_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>290</y>
+        <width>93</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Autres</string>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEdit_ajouter">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>390</y>
+        <width>110</width>
+        <height>29</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEdit_2_ajouter">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>390</y>
+        <width>110</width>
+        <height>29</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>390</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>au</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>340</y>
+        <width>271</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Est autorisé à rentrer dans le parking:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_Prenom_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>210</y>
+        <width>181</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_2_Non_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>160</y>
+        <width>181</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_Plaque_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>440</y>
+        <width>141</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_Annuler_Ajouter">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>490</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Annuler</string>
       </property>
      </widget>
     </widget>
@@ -263,7 +413,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>468</width>
+     <width>469</width>
      <height>25</height>
     </rect>
    </property>
