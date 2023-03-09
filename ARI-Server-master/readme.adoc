@@ -102,10 +102,10 @@ Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du
 === Déploiment
 ===== Via Docker (WIP)
 Construire l'image docker :
-`sudo docker build . -t pbm/serveur-soft`
+`sudo docker build -t pbm/serveur .`
 
 La lancer : 
-`sudo docker run pbm/serveur-soft:latest`
+`sudo docker run -tid pbm/serveur --name ari-serveur`
 cela va automatiquement installer toutes les dépendances, compiler le logiciel et le lancer
 
 ===== Manuellement
