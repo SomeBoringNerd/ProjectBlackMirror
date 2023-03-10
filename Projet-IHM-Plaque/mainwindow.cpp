@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
      ui->lineEdit_Prenom_Ajouter->setClearButtonEnabled(true);
      ui->lineEdit_Plaque_Ajouter->setClearButtonEnabled(true);
 
-    initLogger("ClientQT");
+    //initLogger("ClientQT");
 }
 
 MainWindow::~MainWindow()
@@ -30,10 +30,10 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::on_textEdit_nom_ajouter_copyAvailable(bool b)
-{
+// void MainWindow::on_textEdit_nom_ajouter_copyAvailable(bool b)
+//{
 
-}
+//}
 
 
 void MainWindow::on_pushButton_Ouvrir_Menu_clicked()
