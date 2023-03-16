@@ -7,7 +7,7 @@ RUN export TERM=xterm
 
 RUN cd /ari-dev
 RUN apt update &&\
-    apt install -y g++ wget unzip build-essential iputils-ping
+    apt install -y g++ wget unzip build-essential iputils-ping xterm
 
 # installation de cmake    
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh &&\
