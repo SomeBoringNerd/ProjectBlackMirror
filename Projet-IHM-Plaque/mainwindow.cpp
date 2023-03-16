@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-
+    std::cout << "Bouton cliqué" << std::endl;
 }
 
 
