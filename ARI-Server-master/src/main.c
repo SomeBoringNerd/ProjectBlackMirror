@@ -25,7 +25,7 @@
 #define DEBUG 1
 
 // ip des deux caméras avec leur port
-char* ips[2] = {"192.168.0.0", "192.168.0.1"};
+char* ips[2] = {"192.168.1.2", "192.168.0.4"};
 
 // note : apparemment mettre les variables pthread_t en local fait un SIGDEV violation
 pthread_t camUn, camDeux, exit_listener;
