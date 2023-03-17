@@ -14,9 +14,9 @@ api.listen(1984, () =>
     LogPropre("l'api a été chargée sur le port 1984");
     db  = new sqlite3.Database('./Profs.db', sqlite3.OPEN_READWRITE);
     
-    //                                                              plaque est primary      vrai ou     si c'est un
-    //                                                                  key                 faux        compte temporaire
-    //db.run("CREATE TABLE Profs (NOM VARCHAR(64), PRENOM VARCHAR(64), PLAQUE VARCHAR(12), PROF TINYINT, EXPIRATION DATE)")
+    //                                                                           plaque est primary     vrai ou      si c'est un
+    //                                                                                  key              faux       compte temporaire
+    db.run("CREATE TABLE IF NOT EXISTS Profs (NOM VARCHAR(64), PRENOM VARCHAR(64), PLAQUE VARCHAR(12), PROF TINYINT, EXPIRATION DATE)")
 })
 
 api.post("/get", (req, rep) => {
@@ -34,6 +34,11 @@ api.post("/get", (req, rep) => {
 
         })
     }
+
+})
+
+api.post("/add", (req, res) => 
+{
 
 })
 
