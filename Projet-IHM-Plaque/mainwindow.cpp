@@ -72,3 +72,5 @@ void MainWindow::on_pushButton_Annuler_Connexion_clicked() // Bouton Annuler cli
     ui->lineEdit_2_MotDePasse_Connexion->setText("");
 }
 
+
+

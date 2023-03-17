@@ -27,7 +27,6 @@ private slots:
 
     void on_pushButton_Annuler_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
 
-    void on_pushButton_3_enregistrer_clicked(); // Bouton Enregistrer dans la page Ajouter
 
     void on_pushButton_3_Connexion_clicked(); // Bouton Connexion dans la page Connexion
 
