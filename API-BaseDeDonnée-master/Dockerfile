@@ -1,5 +1,13 @@
-FROM node
+FROM node:16
 
-RUN /bin/bash npm install express body-parser sqlite3
+WORKDIR /usr/src/app
 
-CMD ["node index.js"]
+COPY package*.json ./
+
+RUN /bin/bash npm install
+
+COPY . .
+
+EXPOSE 1984
+
+CMD [ "node", "index.js" ]
