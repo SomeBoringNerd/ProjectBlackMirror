@@ -89,6 +89,8 @@ void send(char * message)
     if(client != NULL || !isClientLoggedIn)
     {
         ws_sendframe_txt(client, message);
+    }else{
+        LogError("Tentative d'envoyer un message au serveur mais aucun client n'est connecté");
     }
 }
 

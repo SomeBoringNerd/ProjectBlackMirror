@@ -5,7 +5,7 @@ fi
 
 # met a jour les repos APT et installe des dependances de build
 apt update
-apt install -y g++ wget unzip build-essential iputils-ping
+apt install -y g++ wget unzip build-essential iputils-ping xterm ffmpeg
 
 # compile cmake 3.26 car la version APT est la 3.7
 wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh
