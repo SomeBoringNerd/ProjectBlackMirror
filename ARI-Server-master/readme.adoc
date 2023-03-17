@@ -105,7 +105,7 @@ Construire l'image docker :
 `sudo docker build -t pbm/serveur .`
 
 La lancer : 
-`sudo docker run -tid pbm/serveur --name ari-serveur`
+`sudo docker run -d --name ari-serveur -tid pbm/serveur`
 cela va automatiquement installer toutes les dépendances, compiler le logiciel et le lancer
 
 ===== Manuellement
@@ -117,7 +117,7 @@ Notre serveur est sous Ubuntu server, donc il utilise APT. Pour les distros bas�
 
 Le script va installer toute les dependances du logiciel, y compris les outils pour le compiler (lui et d'autres dépendances).
 
-dépendances : g++, wget, unzip, build-essential, iputils-ping, cmake, opencv
+dépendances : g++, wget, unzip, build-essential, iputils-ping, cmake, opencv, ffmpeg et xterm
 
 Le script va build (et installer) cmake et opencv
 
@@ -126,3 +126,9 @@ Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Se
 
 A noter qu'il faut lancer le logiciel en root.
 
+
+=== A faire : 
+
+> reconnaissance de texte
+> relier a la base de données
+> système de websockets a finir

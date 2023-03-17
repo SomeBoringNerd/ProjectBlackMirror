@@ -45,7 +45,7 @@ static void * loop(void * data)
     char* message = malloc(sizeof(char) * 256);
     while(doit_exit)
     {
-        if(isClientLoggedIn)
+        if(isClientLoggedIn || DEBUG)
         {
             // si la caméra est en ligne
             if(!pingCam(ips[_ip]))
@@ -62,7 +62,7 @@ static void * loop(void * data)
                 break;
             }else
             {
-                sprintf(message, sizeof(message), "Image obtenue de %s", ips[_ip]);    
+                Log("Image obtenue d'une des caméras");
             }        
             
             if(!doit_exit)

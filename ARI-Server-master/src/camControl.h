@@ -28,7 +28,21 @@
 */
 int fetchFromCam(char *ip)
 {
-    return 0;
+    char commande[250];
+
+    //ceci est un hack car en C et C++ on ne peut pas additionner de strings.
+    //  "> /dev/null 2>&1" permet de ne pas avoir de logs (avec ffmpeg c'est pratique mdr)
+    snprintf(commande, sizeof(commande), "ffmpeg -y -i rtsp://%s:554 -frames:v 1 %s.jpg > /dev/null 2>&1", ip, ip);
+
+    // check le succès de la commande
+    int status = system(commande);  
+
+    if (-1 != status) 
+    {         
+        // on retourne l'inverse de WEXITSTATUS (car 0 = succès, mais en C, 0 == false)
+        // donc en inversant le status, on retourne 1 si le ping est répondu, 0 si time out
+        return !WEXITSTATUS(status);;
+    }
 }
 
 /**
@@ -44,8 +58,8 @@ int pingCam(char* ip)
     // on va essayer de ping l'ip passée une fois
 
     //ceci est un hack car en C et C++ on ne peut pas additionner de strings.
-    //  "> nul" permet de ne pas avoir d'output, ce qui peut vite remplir les logs
-    snprintf(commande, sizeof(commande), "ping -c 1 %s -W 1 -q  > nul", ip);
+    //  "> /dev/null 2>&1" permet de ne pas avoir d'output, pour ne pas remplir les logs
+    snprintf(commande, sizeof(commande), "ping -c 1 %s -W 1 -q   > /dev/null 2>&1", ip);
 
     // check le succès de la commande
     int status = system(commande);  
