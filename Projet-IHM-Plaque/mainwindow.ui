@@ -456,7 +456,7 @@
      <widget class="QPushButton" name="pushButton_3_Connexion">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>160</x>
         <y>400</y>
         <width>91</width>
         <height>29</height>
@@ -469,7 +469,7 @@
      <widget class="QPushButton" name="pushButton_Annuler_Connexion">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>30</x>
         <y>400</y>
         <width>83</width>
         <height>29</height>
@@ -477,6 +477,19 @@
       </property>
       <property name="text">
        <string>Annuler</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>400</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Retour</string>
       </property>
      </widget>
     </widget>
