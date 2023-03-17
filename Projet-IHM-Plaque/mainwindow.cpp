@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
      ui->lineEdit_Prenom_Ajouter->setClearButtonEnabled(true);
      ui->lineEdit_Plaque_Ajouter->setClearButtonEnabled(true);
 
-    //initLogger("ClientQT");
+    initLogger("ClientQT");
+    Log("Logiciel lancé");
 }
 
 MainWindow::~MainWindow()
@@ -42,16 +43,32 @@ void MainWindow::on_pushButton_Ouvrir_Menu_clicked()
     m_texte->setText("Vous avez ouvert le protail."); // Définition du texte
 }
 
-void MainWindow::on_pushButton_2_Ajouter_Menu_clicked() // Bouton ed Ajouter relier à la page Ajouter
+void MainWindow::on_pushButton_2_Ajouter_Menu_clicked() // Bouton Ajouter qui est relier à la page Ajouter
 {
-     ui->stackedWidget->setCurrentIndex(1);
+     ui->stackedWidget->setCurrentIndex(2);
 }
 
 
-void MainWindow::on_pushButton_Annuler_Ajouter_clicked() // Sile bouton annuler est cliqué
+void MainWindow::on_pushButton_Annuler_Ajouter_clicked() // Si le bouton annuler de la page Ajouter est cliqué, efface tout
 {
      ui->lineEdit_2_Non_Ajouter->setText("");
      ui->lineEdit_Prenom_Ajouter->setText("");
      ui->lineEdit_Plaque_Ajouter->setText("");
+}
+
+
+
+
+
+void MainWindow::on_pushButton_3_Connexion_clicked() //Bouton de la page Connexion cliqué, ramène l'utilisateur à la page Ajouter
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow::on_pushButton_Annuler_Connexion_clicked() // Bouton Annuler cliqué, efface tout
+{
+    ui->lineEdit_2_NonUser_Connexion->setText("");
+    ui->lineEdit_2_MotDePasse_Connexion->setText("");
 }
 

@@ -17,20 +17,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
 
 
-    void on_textEdit_copyAvailable(bool b);
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_Ouvrir_Menu_clicked(); //Bouton Ouvrir dans la page Menu
 
-    void on_pushButton_Ouvrir_Menu_clicked();
 
-    void on_textEdit_nom_ajouter_copyAvailable(bool b);
+    void on_pushButton_2_Ajouter_Menu_clicked(); // Bouton Ajouter dans la page Menu
 
-    void on_pushButton_2_Ajouter_Menu_clicked();
+    void on_pushButton_Annuler_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
 
-    void on_pushButton_Annuler_Ajouter_clicked();
+    void on_pushButton_3_enregistrer_clicked(); // Bouton Enregistrer dans la page Ajouter
+
+    void on_pushButton_3_Connexion_clicked(); // Bouton Connexion dans la page Connexion
+
+    void on_pushButton_Annuler_Connexion_clicked(); // Bouton Annuler dans la page Connexion
 
 private:
     Ui::MainWindow *ui;
