@@ -246,8 +246,7 @@ extern "C" {
 		 * @brief On message event, called when a client sends a text
 		 * or binary message.
 		 */
-		void (*onmessage)(ws_cli_conn_t *client,
-			const unsigned char *msg[10][128], uint64_t msg_size, int type);
+		void (*onmessage)(ws_cli_conn_t *client, const unsigned char *msg, uint64_t msg_size, int type);
 	};
 
 	/* Forward declarations. */

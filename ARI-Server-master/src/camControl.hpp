@@ -2,10 +2,10 @@
 #define HEADER_CAM_CONTROL
 
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <stdlib.h>
 
-#include "logger.h"
+#include "logger.hpp"
 
 /********************************************************************
 
@@ -26,7 +26,7 @@
  * @param ip : IP de la caméra
  * @return : succès de l'opération
 */
-int fetchFromCam(char *ip)
+int fetchFromCam(std::string ip)
 {
     char commande[250];
 
@@ -51,7 +51,7 @@ int fetchFromCam(char *ip)
  * @param ip : ip de l'appareil a ping (duh)
  * @return : Succès de l'opération (1 = marche, 0 = fail)
 */
-int pingCam(char* ip)
+int pingCam(std::string ip)
 {
     char commande[128];
 

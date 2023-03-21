@@ -2,8 +2,8 @@
 #define HEADER_LOGGER
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string>
 
 char *_name;
 

@@ -3,7 +3,7 @@
 
 #include "include/ws.h"
 #include <stdio.h>
-#include <string.h>
+#include <iostream>
 #include <stdlib.h>
 
 ws_cli_conn_t *client;
@@ -67,15 +67,16 @@ void onclose(ws_cli_conn_t *_client)
  * @param client : Connexion
  * @param msg    Contenu du message
  */
-void onmessage(ws_cli_conn_t *_client, const unsigned char msg, uint64_t size, int type)
+void onmessage(ws_cli_conn_t *_client, const unsigned char *msg, uint64_t msg_size, int type)
 {
     char *cli, *con_ip;
     con_ip = ws_getaddress(_client);
     cli =    ws_getaddress(client);
 
     if(cli != con_ip) return;
+    unsigned char* _msg = msg;
 
-    if(msg == "test_comm")
+    if(_msg == "test_comm")
     {
 	    Log("Message reçu du client");
     }
