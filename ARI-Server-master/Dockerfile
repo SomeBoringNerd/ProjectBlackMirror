@@ -3,11 +3,16 @@ FROM ubuntu:20.04
 WORKDIR /ari-dev
 
 RUN echo installation des dépendances
-RUN export TERM=xterm
+ARG DEBIAN_FRONTEND=noninteractive
+
+# tzdata freeze l'image donc on l'installe seul
+RUN apt update && apt install -y tzdata
 
 RUN cd /ari-dev
-RUN apt update &&\
-    apt install -y g++ wget unzip build-essential iputils-ping xterm
+RUN apt install -yq g++ wget unzip build-essential iputils-ping xterm ffmpeg
+
+RUN apt install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr
+RUN apt install -y tesseract-ocr-all 
 
 # installation de cmake    
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh &&\

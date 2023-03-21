@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in {1..3..1}
+do
+    convert "$i".jpg -fuzz 30% -fill black -opaque "#a87830" -threshold 20% -channel RGB -negate "$i".png
+    tesseract "$i".png stdout --oem 2 --psm 12 -l fra #| grep [A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]
+done

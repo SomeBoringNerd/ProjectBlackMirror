@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/wait.h>
-#include <string.h>
+#include <string>
 #include <unistd.h>
 
-#include "logger.h"
-#include "camControl.h"
-#include "server.h"
+#include "logger.hpp"
+#include "camControl.hpp"
+#include "server.hpp"
+
+using namespace std;
 
 /********************************************************************
 
@@ -25,7 +27,7 @@
 #define DEBUG 1
 
 // ip des deux caméras avec leur port
-char* ips[2] = {"192.168.1.2", "192.168.0.4"};
+string ips[2] = {"192.168.1.2", "192.168.0.4"};
 
 // note : apparemment mettre les variables pthread_t en local fait un SIGDEV violation
 pthread_t camUn, camDeux, exit_listener;
@@ -39,10 +41,10 @@ int respond[2] = {0,0};
  * @param ip : IP de la caméra
  * @return rien normalement
 */
-static void * loop(void * data)
+void * loop(void * data)
 {
     int _ip = (int)data;
-    char* message = malloc(sizeof(char) * 256);
+    string message;
     while(doit_exit)
     {
         if(isClientLoggedIn || DEBUG)
@@ -50,13 +52,14 @@ static void * loop(void * data)
             // si la caméra est en ligne
             if(!pingCam(ips[_ip]))
             {
-                sprintf(message, "%s est hors ligne, je ne peux pas assurer le fonctionnement du système donc je vais demander de l'aide au client", ips[_ip]);
+                message = ips[_ip] + " est hors ligne";
+               // sprintf(message, "%s est hors ligne, je ne peux pas assurer le fonctionnement du système donc je vais demander de l'aide au client", ips[_ip]);
                 send("WARNING_EXCEPTION_NO_CAM_FOUND");
                 LogError(message);
             }
             else if(!fetchFromCam(ips[_ip]))
             {
-                sprintf(message, sizeof(message), "Je n'ai pas pu obtenir une image de %s", ips[_ip]);
+                message = "Impossible de récuperer une image de " + ips[_ip] + " est hors ligne";
                 send("ERROR_COULDNT_GET_IMAGE");
                 LogError(message);
                 break;
