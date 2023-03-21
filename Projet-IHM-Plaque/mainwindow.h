@@ -22,15 +22,26 @@ private slots:
 
     void on_pushButton_Ouvrir_Menu_clicked(); //Bouton Ouvrir dans la page Menu
 
-
     void on_pushButton_2_Ajouter_Menu_clicked(); // Bouton Ajouter dans la page Menu
 
     void on_pushButton_Annuler_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
 
-
     void on_pushButton_3_Connexion_clicked(); // Bouton Connexion dans la page Connexion
 
     void on_pushButton_Annuler_Connexion_clicked(); // Bouton Annuler dans la page Connexion
+
+    void on_pushButton_4_Signaler_Menu_clicked(); // Bouton Signaler dans la page Menu
+
+    void on_pushButton_3_enregistrer_clicked(); // Bouton enregistrer dans la page Ajouter
+
+    void on_pushButton_Retour_Connexion_clicked(); // Bouton Retour dans la page Connexion
+
+    void on_pushButton_2_Inscription_Connexion_clicked(); //Bouton Inscription dans la page Connexion
+
+    void on_pushButton_2_Retour_Inscription_clicked();
+
+
+    void on_pushButton_Ajouter_Admin_clicked();
 
 private:
     Ui::MainWindow *ui;
