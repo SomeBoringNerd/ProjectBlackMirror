@@ -110,46 +110,13 @@ void MainWindow::on_pushButton_3_Connexion_clicked() //Bouton de la page Connexi
     ui->stackedWidget->setCurrentIndex(4);
 }
 
-
-// #################### Partie ADMIN ########################################
-
-void MainWindow::on_pushButton_Retirer_Ajouter_clicked() // Si le bouton annuler de la page Ajouter est cliqué, efface tout
-{
-     ui->lineEdit_2_Non_Ajouter->setText("");
-     ui->lineEdit_Prenom_Ajouter->setText("");
-     ui->lineEdit_Plaque_Ajouter->setText("");
-     ui->stackedWidget->setCurrentIndex(4);
-}
-
-
-void MainWindow::on_pushButton_3_enregistrer_clicked() // Bouton Enregistrer cliqué, renvoie un message confirmant l'enregistrement
-{
-    QMessageBox::information(this,"enregistrer","L'enregistrement a bien été effectué");
-    ui->stackedWidget->setCurrentIndex(4);
-}
-
-
-
-
-
-
-void MainWindow::on_pushButton_Annuler_Connexion_clicked() // Bouton Annuler cliqué, efface tout dans la page Connexion
-{
-    ui->lineEdit_2_Non_User_Connexion->setText("");
-    ui->lineEdit_2_Password_Connexion->setText("");
-}
-
-
-
-
-
 void MainWindow::on_pushButton_2_Inscription_Connexion_clicked() // Bouton Inscription cliqué, revoie vers la page Inscription
 {
     ui->stackedWidget->setCurrentIndex(3);
 }
 
 
-
+// #################### Partie ADMIN ########################################
 
 void MainWindow::on_pushButton_Ajouter_Admin_clicked() //Bouton Ajouter cliqué, renvoie à la page Ajouter
 {
@@ -167,6 +134,39 @@ void MainWindow::on_pushButton_3_Deconnexion_Admin_clicked() // Boutton Déconne
         QMessageBox::information(this,"Déconnexion","La déconnexion a bien été effectué");
     }
 }
+
+
+
+void MainWindow::on_pushButton_Annuler_Ajouter_clicked() // Si le bouton annuler de la page Ajouter est cliqué, efface tout
+{
+     ui->lineEdit_2_Non_Ajouter->setText("");
+     ui->lineEdit_Prenom_Ajouter->setText("");
+     ui->lineEdit_Plaque_Ajouter->setText("");
+     ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::on_pushButton_3_enregistrer_clicked() // Bouton Enregistrer cliqué, renvoie un message confirmant l'enregistrement
+{
+    QMessageBox::information(this,"enregistrer","L'enregistrement a bien été effectué");
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::on_pushButton_Annuler_Connexion_clicked() // Bouton Annuler cliqué, efface tout dans la page Connexion
+{
+    ui->lineEdit_2_Non_User_Connexion->setText("");
+    ui->lineEdit_2_Password_Connexion->setText("");
+}
+
+
+
+
+
+
+
+
+
 
 
 
