@@ -43,8 +43,6 @@ private slots:
 
     void on_pushButton_Ajouter_Admin_clicked();
 
-    void on_pushButton_3_Deconnexion_Administrateur_clicked();
-
     void on_pushButton_Quitter_Menu_clicked();
 
     void on_pushButton_3_Inscrire_Inscription_clicked();
