@@ -24,7 +24,7 @@ private slots:
 
     void on_pushButton_2_Ajouter_Menu_clicked(); // Bouton Ajouter dans la page Menu
 
-    void on_pushButton_Annuler_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
+    void on_pushButton_Retirer_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
 
     void on_pushButton_3_Connexion_clicked(); // Bouton Connexion dans la page Connexion
 
@@ -42,6 +42,14 @@ private slots:
 
 
     void on_pushButton_Ajouter_Admin_clicked();
+
+    void on_pushButton_3_Deconnexion_Administrateur_clicked();
+
+    void on_pushButton_Quitter_Menu_clicked();
+
+    void on_pushButton_3_Inscrire_Inscription_clicked();
+
+    void on_pushButton_3_Deconnexion_Admin_clicked();
 
 private:
     Ui::MainWindow *ui;
