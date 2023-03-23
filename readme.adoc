@@ -60,3 +60,7 @@ Répartition des taches :
 | Système de reconnaissance de texte, fork de wsServer / ToyWS, logiciels serveur, création des diagrammes
 
 |===
+
+== A faire sur le repo : 
+
+ajouter la config Nix-OS

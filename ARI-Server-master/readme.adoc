@@ -99,10 +99,36 @@ Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du
 
 |===
 
-=== Compiler
+=== Déploiment
+===== Via Docker (WIP)
+Construire l'image docker :
+`sudo docker build -t pbm/serveur .`
 
-Le logiciel se compile via CMake (3.25 minimum).
+La lancer : 
+`sudo docker run -d --name ari-serveur -tid pbm/serveur`
+cela va automatiquement installer toutes les dépendances, compiler le logiciel et le lancer
 
-Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`.
+===== Manuellement
 
-Déplacez l'executable dans un dossier avec les logiciels "CamControl-master" et "ARI-Plaques"
+dans le dossier script, il y'a deux scripts :
+
+====== >installer-dependance (executer en root)
+Notre serveur est sous Ubuntu server, donc il utilise APT. Pour les distros basées sur Arch / Red Hat, veuillez consulter votre repo de packages
+
+Le script va installer toute les dependances du logiciel, y compris les outils pour le compiler (lui et d'autres dépendances).
+
+dépendances : g++, wget, unzip, build-essential, iputils-ping, cmake, opencv, ffmpeg et xterm
+
+Le script va build (et installer) cmake et opencv
+
+====== >compiler-serveur
+Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Server.
+
+A noter qu'il faut lancer le logiciel en root.
+
+
+=== A faire : 
+
+> reconnaissance de texte
+> relier a la base de données
+> système de websockets a finir
