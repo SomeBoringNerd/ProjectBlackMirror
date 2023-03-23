@@ -14,11 +14,7 @@ Ce repos contient le code source des programmes suivants :
 | auteur + contact
 
 | ARI-Server
-| Logiciel en C permettant au serveur et client de communiquer ensemble
-| SomeBoringNerd (contact : someboringnerd@gmail.com)
-
-| ARI-Plaques
-| Logiciel en (a réfléchir) permettant au serveur de reconnaitre une plaque d'immatriculation sur une photo.
+| Logiciel en C permettant au serveur et client de communiquer ensemble, et de reconnaitre du texte
 | SomeBoringNerd (contact : someboringnerd@gmail.com)
 
 | Projet-IHM-Plaque
@@ -27,10 +23,6 @@ Ce repos contient le code source des programmes suivants :
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
-| Hergo (twitch.tv/Hergo)
-
-| Arduino-Controller-master
-| permet a un Arduino de controller une barrière
 | Hergo (twitch.tv/Hergo)
 
 | wsServer / ToyWS
@@ -57,7 +49,7 @@ Répartition des taches :
 
 
 | SomeBoringNerd
-| Système de reconnaissance de texte, fork de wsServer / ToyWS, logiciels serveur, création des diagrammes
+| Système de reconnaissance de texte, logiciels serveur, création des diagrammes
 
 |===
 

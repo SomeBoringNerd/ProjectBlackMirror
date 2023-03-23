@@ -1,0 +1,22 @@
+{
+  "name": "terminatorbot",
+  "version": "1.0.0",
+  "description": "Bot discord pour notre discord privé",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SomeBoringNerd/ProjectBlackMirror.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SomeBoringNerd/ProjectBlackMirror/issues"
+  },
+  "homepage": "https://github.com/SomeBoringNerd/ProjectBlackMirror#readme",
+  "dependencies": {
+    "discord.js": "^14.8.0"
+  }
+}
