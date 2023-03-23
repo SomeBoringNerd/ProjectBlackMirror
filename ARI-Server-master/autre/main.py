@@ -1,7 +1,7 @@
 # copié collé sans honte de : 
 # https://www.gamingdeputy.com/fr/comment-detecter-et-reconnaitre-les-plaques-dimmatriculation-des-voitures-a-laide-de-python/
 
-# traduction de python en C par SomeBoringNerd
+# traduction de python en C++ par SomeBoringNerd
 
 import cv2
 import imutils

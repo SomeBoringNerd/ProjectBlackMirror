@@ -2,11 +2,16 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/wait.h>
-#include <string>
+#include <stdint.h>
 #include <unistd.h>
+
+#include <string>
+#include <cstdint>
+#include <regex>
 
 #include "logger.hpp"
 #include "camControl.hpp"
+#include "imgUtil.hpp"
 #include "server.hpp"
 
 using namespace std;
@@ -24,7 +29,7 @@ using namespace std;
 
 *********************************************************************/
 
-#define DEBUG 1
+#define DEBUG_MODE 0
 
 // ip des deux caméras avec leur port
 string ips[2] = {"192.168.1.2", "192.168.0.4"};
@@ -43,30 +48,46 @@ int respond[2] = {0,0};
 */
 void * loop(void * data)
 {
-    int _ip = (int)data;
-    string message;
+    int _ip = (intptr_t)data;
+    int old_response = 0;
     while(doit_exit)
     {
-        if(isClientLoggedIn || DEBUG)
+        if(isClientLoggedIn || !DEBUG_MODE)
         {
             // si la caméra est en ligne
-            if(!pingCam(ips[_ip]))
+            respond[_ip] = execute(ips[_ip], 1);
+
+            if(!respond[_ip])
             {
-                message = ips[_ip] + " est hors ligne";
-               // sprintf(message, "%s est hors ligne, je ne peux pas assurer le fonctionnement du système donc je vais demander de l'aide au client", ips[_ip]);
-                send("WARNING_EXCEPTION_NO_CAM_FOUND");
-                LogError(message);
+                if(old_response != respond[_ip])
+                {
+                    LogWarning("La caméra " + ips[_ip] + " est hors ligne");
+                    send("WARNING_EXCEPTION_NO_CAM_FOUND");
+                }
             }
-            else if(!fetchFromCam(ips[_ip]))
+            else 
             {
-                message = "Impossible de récuperer une image de " + ips[_ip] + " est hors ligne";
-                send("ERROR_COULDNT_GET_IMAGE");
-                LogError(message);
-                break;
-            }else
-            {
-                Log("Image obtenue d'une des caméras");
-            }        
+                if(old_response != respond[_ip])
+                {
+                    Log("La caméra " + ips[_ip] + " est revenue en ligne");
+                }
+                if(!execute(ips[_ip], 0))
+                {
+                    send("ERROR_COULDNT_GET_IMAGE");
+                    LogError("Impossible de récuperer une image de " + ips[_ip] + "(hors ligne ?)");
+                    break;
+                }else
+                {
+                    string plaque = getPlaque(ips[_ip] + ".jpg");
+
+                    if(regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
+                    {
+                        Log(plaque);
+                    }
+                }   
+            }    
+
+            old_response = respond[_ip];
             
             if(!doit_exit)
             {
@@ -95,54 +116,24 @@ int main()
     
 
     doit_exit = 1;
-    system("clear");
 
     // système simple pour savoir si les cams sont en ligne
 
-    if(!DEBUG)
-    {
-        int cam1 = pingCam(ips[0]);
-        int cam2 = pingCam(ips[1]);
+    int cam1 = execute(ips[0], 1);
+    int cam2 = execute(ips[1], 1);
 
-        if(cam1){
-            Log("ping cam 1 réussi");
-	        respond[0] = 1;
-        }
-        else{
-            LogError("ping cam 1 échoué");
-            return 1;
-        }
-        
-        if(cam2){
-            Log("ping cam 2 réussi");
-	        respond[1] = 1;
-        }
-        else{
-            LogError("ping cam 2 échoué");
-            return 1;
-        }
-    }else{
-        LogWarning("LE LOGICIEL EST EN MODE DEBUG ! SI VOUS ÊTES SUR LE SERVEUR DE PROD VEUILLEZ CHANGER LA VARIABLE DEBUG DE 1 A 0 !!!!!!!!!!");
-    }
-    // création / gestion des threads
-
-    Log("Création des thread image");
-
-    int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
-
-    if(t1){
-        Log("thread 1 n'a pas pu être créé");
-        return 1;
-    }
-    
     int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
     if(t2){
         Log("thread 2 n'a pas pu être créé");
         return 1;
     }
 
-    Log("Lancement du serveur websocket");
-    
+    int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
+    if(t1){
+        Log("thread 1 n'a pas pu être créé");
+        return 1;
+    }
+
     initWebSocket();
 
     char e;

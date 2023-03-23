@@ -4,12 +4,12 @@ Ce logiciel sert a gérer la partie serveur du projet.
 
 Il connecte l'IA, la base de donnée, le client et les micro-controllers divers (Arduino, RaspBerry PI).
 
-Choix du langage : C, car il s'agit du plus performant et ne dispose pas de fonctionalités superflues comme le C++ (comme l'orienté object qui est ici innutile)
+Choix du langage : C++ car Tesseract-OCR et OpenCV ne supportent pas/plus le C.
 
 libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de l'adapter a nos besoins
 
 === Projet BlackMirror : Informations en bloc
-==== main.c
+==== main.cpp
 
 Main.c est le coeur du programme, il fonctionne sur le serveur et gère toutes les parties mouvante sur le serveur,
 
@@ -49,7 +49,45 @@ allant de la base de données a la reconnaissance de texte, du controle réseau 
 
 |===
 
-==== logger.h
+==== camControl.hpp
+
+Ce header contient le code lié au controle des caméras, c'est a dire les pinger et récuperer une capture d'écran
+du flux vidéo en direct.
+
+===== Fonctions
+[cols="~,~,~"]
+|===
+| nom complet 
+| Explications 
+| Paramètres
+
+| `int execute()`
+| Executer une des deux commandes : ping, ou récuperer
+| Ip de la caméra, Action : 0 = ping, 1 = screenshot
+
+|===
+
+==== imgUtil.hpp
+
+S'occupe de la reconnaissance de texte sur la capture d'écran.
+
+===== Fonctions
+[cols="~,~,~"]
+|===
+| nom complet 
+| Explications 
+| Paramètres
+
+| `string getProperName(string _plaque)`
+| Tesseract-OCR peut detecter des données poubelles, cette fonction va formatter le texte pour qu'il ressorte sous le format "AA-123-BB"
+| Texte brut
+
+| `string getPlaque(string filename)`
+| Detecte l'endroit où une plaque d'immatriculation peut exister
+| filename : nom du fichier de l'image avec extention (path relatif)
+|===
+
+==== logger.hpp
 
 Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du serveur et le client QT.
 
@@ -100,7 +138,7 @@ Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du
 |===
 
 === Déploiment
-===== Via Docker (WIP)
+===== Via Docker
 Construire l'image docker :
 `sudo docker build -t pbm/serveur .`
 
@@ -122,6 +160,7 @@ dépendances : g++, wget, unzip, build-essential, iputils-ping, cmake, opencv, f
 Le script va build (et installer) cmake et opencv
 
 ====== >compiler-serveur
+
 Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Server.
 
 A noter qu'il faut lancer le logiciel en root.
@@ -129,6 +168,5 @@ A noter qu'il faut lancer le logiciel en root.
 
 === A faire : 
 
-> reconnaissance de texte
 > relier a la base de données
 > système de websockets a finir

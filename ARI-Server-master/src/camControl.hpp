@@ -19,50 +19,27 @@
 
 *********************************************************************/
 
-
-/**
- * récupère ce que voit la caméra sur l'instant T et le sauvegarde
- * 
- * @param ip : IP de la caméra
- * @return : succès de l'opération
-*/
-int fetchFromCam(std::string ip)
-{
-    char commande[250];
-
-    //ceci est un hack car en C et C++ on ne peut pas additionner de strings.
-    //  "> /dev/null 2>&1" permet de ne pas avoir de logs (avec ffmpeg c'est pratique mdr)
-    snprintf(commande, sizeof(commande), "ffmpeg -y -i rtsp://%s:554 -frames:v 1 %s.jpg > /dev/null 2>&1", ip, ip);
-
-    // check le succès de la commande
-    int status = system(commande);  
-
-    if (-1 != status) 
-    {         
-        // on retourne l'inverse de WEXITSTATUS (car 0 = succès, mais en C, 0 == false)
-        // donc en inversant le status, on retourne 1 si le ping est répondu, 0 si time out
-        return !WEXITSTATUS(status);;
-    }
-}
-
 /**
  * Ping une addresse ip pour savoir si une caméra est sur le réseau local.
  * 
  * @param ip : ip de l'appareil a ping (duh)
+ * @param ping : determine ce que la fonction va faire (1 = Ping, 0 = télécharger image depuis la caméra)
  * @return : Succès de l'opération (1 = marche, 0 = fail)
 */
-int pingCam(std::string ip)
+int execute(std::string ip, int ping)
 {
-    char commande[128];
-
     // on va essayer de ping l'ip passée une fois
 
-    //ceci est un hack car en C et C++ on ne peut pas additionner de strings.
-    //  "> /dev/null 2>&1" permet de ne pas avoir d'output, pour ne pas remplir les logs
-    snprintf(commande, sizeof(commande), "ping -c 1 %s -W 1 -q   > /dev/null 2>&1", ip);
+    string cmd;// = 
+
+    if(ping){
+        cmd = "ping -c 1 " + ip + " -W 1 -q > /dev/null 2>&1";
+    }else{
+        cmd = "ffmpeg -y -i rtsp://" + ip + ":554 -frames:v 1 " + ip + ".jpg > /dev/null 2>&1";
+    }
 
     // check le succès de la commande
-    int status = system(commande);  
+    int status = system(cmd.c_str());  
 
     if (-1 != status) 
     {         
@@ -70,6 +47,8 @@ int pingCam(std::string ip)
         // donc en inversant le status, on retourne 1 si le ping est répondu, 0 si time out
         int ping_ret = WEXITSTATUS(status); 
         return !ping_ret;
+    }else{
+        return 0;
     }
 }
 

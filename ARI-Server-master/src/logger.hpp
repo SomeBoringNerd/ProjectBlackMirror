@@ -5,17 +5,24 @@
 #include <stdlib.h>
 #include <string>
 
-char *_name;
+#include <iostream>
+
+using namespace std;
+
+string _name;
 
 FILE *_log;
+
+using namespace std;
 
 /**
  * Je présente mes plus sincères excuses a ceux qui ont une meilleure idée de comment faire ça
  * 
  * @param appname : nom de l'application, doit être unique
 */
-int initLogger(char* appname)
+int initLogger(string appname)
 {
+    /*
     _name = appname;
     
     char buffer[128];
@@ -37,37 +44,32 @@ int initLogger(char* appname)
     snprintf(file, sizeof(file), "./%s/log.txt", _name);
 
     _log = fopen(file, "w");
+    */
     return 0;
 }
 
-void toFile(char *texte)
+void toFile(string texte)
 {
-    printf(texte);
-    fprintf(_log, texte);
+    printf(texte.c_str());
+    //fprintf(_log, texte);
 }
 
-void Log(char *texte)
+void Log(string texte)
 {
-    char buffer[255];
-    snprintf(buffer, sizeof(buffer), "[LOG] : %s\n", texte);
-    toFile(buffer);
+    toFile("[LOG] : " + texte + "\n");
 }
 
-void LogError(char *texte)
+void LogError(string texte)
 {
     printf("\033[0;31m");
-    char buffer[255];
-    snprintf(buffer, sizeof(buffer), "[ERROR] : %s", texte);
-    toFile(buffer);
+    toFile("[ERROR] : " + texte + "\n");
     printf("\n\033[0;0m");
 }
 
-void LogWarning(char *texte)
+void LogWarning(string texte)
 {
     printf("\033[0;33m");
-    char buffer[255];
-    snprintf(buffer, sizeof(buffer), "[WARNING] : %s", texte);
-    toFile(buffer);
+    toFile("[WARNING] : " + texte + "\n");
     printf("\n\033[0;0m");
 }
 

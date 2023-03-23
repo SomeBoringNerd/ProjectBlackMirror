@@ -7,6 +7,9 @@ fi
 apt update
 apt install -y g++ wget unzip build-essential iputils-ping xterm ffmpeg
 
+apt install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr
+apt install -y tesseract-ocr-all 
+
 # compile cmake 3.26 car la version APT est la 3.7
 wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh
 
@@ -27,4 +30,3 @@ cmake --build .
 
 echo "Le logiciel est prêt a être compilé !"
 echo "Lancez le script \"compiler_serveur\""
-

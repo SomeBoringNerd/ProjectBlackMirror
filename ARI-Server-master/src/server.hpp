@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include "logger.hpp"
+
 ws_cli_conn_t *client;
 int isClientLoggedIn = 0;
 
@@ -74,12 +76,11 @@ void onmessage(ws_cli_conn_t *_client, const unsigned char *msg, uint64_t msg_si
     cli =    ws_getaddress(client);
 
     if(cli != con_ip) return;
-    unsigned char* _msg = msg;
 
-    if(_msg == "test_comm")
+    /*if(msg == "test_comm")
     {
 	    Log("Message reçu du client");
-    }
+    }*/
 }
 /**
  * @brief Wrapper de la fonction ws_sendframe_txt avec un check pour savoir si le client est connecté
