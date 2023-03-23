@@ -16,6 +16,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QSqlDatabase db;
+
 private slots:
 
 
@@ -40,7 +42,6 @@ private slots:
 
     void on_pushButton_2_Retour_Inscription_clicked();
 
-
     void on_pushButton_Ajouter_Admin_clicked();
 
     void on_pushButton_Quitter_Menu_clicked();
@@ -49,41 +50,10 @@ private slots:
 
     void on_pushButton_3_Deconnexion_Admin_clicked();
 
+
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase database;
 };
 #endif // MAINWINDOW_H
-
-class Nom : public QMainWindow
-{
-public :
-    Nom ();
-    ~Nom ();
-private:
-    Nom(char);
-    char nom [15];
-    Ui::MainWindow *ui;
-};
-
-class Prenom : public QMainWindow
-{
-public :
-    Prenom ();
-    ~Prenom ();
-private:
-    Prenom(char);
-    char prenom [15];
-    Ui::MainWindow *ui;
-};
-
-class Nombreplaque : public QMainWindow
-{
-public :
-    Nombreplaque ();
-    ~Nombreplaque ();
-private:
-    Nombreplaque(char);
-    char nombreplaque [15];
-    Ui::MainWindow *ui;
-};
