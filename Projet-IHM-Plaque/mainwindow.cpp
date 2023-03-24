@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("Interface agent d'accueil");
 
     //Placeholder text
 
@@ -106,12 +107,12 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
 
      // Connexion à la base de donnée quand les informations de la partie Inscription, Connexion et Ajouter seront rentrés
       database = QSqlDatabase::addDatabase("QMYSQL");
-     database.setHostName("localhost");
+     database.setHostName("127.0.0.1");
      database.setPort(3306);
      database.setUserName("root");
      database.setPassword("");
      database.setDatabaseName("plaque");
-      bool ok = db.open();
+     bool ok = db.open();
 
      if(database.open())
      {
@@ -138,7 +139,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
          {
              qry.exec();
 
-             QMessageBox::information(this,"Inscription","Un nouvel utilisateur est inscrit");
+             QMessageBox::information(this,"Inscription","Un nouvel administrateur est inscrit");
               ui->stackedWidget->setCurrentIndex(2);
 
 
@@ -147,7 +148,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
 
          else {
 
-             QMessageBox::information(this, "Not Inserted", "Les donnée existent déja");
+             QMessageBox::information(this, "Pas insérés", "Les donnée existent déja");
 
 
          }
@@ -156,7 +157,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
      }
      else {
 
-         QMessageBox::information(this, "base de donnée", "La base de donnée n'est pas connecté");
+         QMessageBox::information(this, "Base de donnée", "La base de donnée n'est pas connecté");
      }
 
  }
