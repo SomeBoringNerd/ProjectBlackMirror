@@ -112,7 +112,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
      database.setUserName("root");
      database.setPassword("");
      database.setDatabaseName("plaque");
-     bool ok = db.open();
+    // bool ok = db.open();
 
      if(database.open())
      {

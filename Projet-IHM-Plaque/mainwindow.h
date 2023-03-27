@@ -1,8 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+#include <QtSql>
+#include <QSqlDatabase>
+
 #include <QMainWindow>
-#include <QtSql/QSqlDatabase>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,7 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QSqlDatabase db;
+    //QSqlDatabase db;
 
 private slots:
 
