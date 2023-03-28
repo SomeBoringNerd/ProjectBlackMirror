@@ -1,0 +1,50 @@
+= Project BlackMirror : Logiciel de gestion coté serveur
+
+Ce logiciel sert a gérer la partie serveur du projet.
+
+Il connecte l'IA, la base de donnée, le client et les micro-controllers divers (Arduino, RaspBerry PI).
+
+Choix du langage : C, car il s'agit du plus performant et ne dispose pas de fonctionalités superflues comme le C++ (bonjour STDLib)
+
+libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de l'adapter a nos besoins
+
+=== Projet BlackMirror : Informations en bloc
+
+[cols="~,~,~,~"]
+|===
+| Fonctions 
+| Usage 
+| Explications 
+| Notes supplémenataires
+
+| Connexion serveur-client 
+| dans `int main()` 
+| Permet de créer un webstocket qui va attendre une connexion d'un client 
+| N/A
+
+| `onMessageReceived(char* content, char **args[][])`
+| appelé par le serveur au runtime
+| permet au serveur d'envoyer un message au client
+| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+
+| `onLogin(char* password, char* ip)`
+| appelé par le serveur quand une tentative de connexion est faite
+| permet au serveur d'envoyer packet d'authentification au client
+| Le premier message envoyé sera un message d'auth pour autoriser ou non la connexion du client.
+
+| `sendMessage(char* content, char **args[][])`
+| appelé par le serveur quand il doit communiquer avec le client
+| permet d'envoyer un packet avec un nom et des arguments
+| la vérification du contenu se fait par le client 
+
+|===
+
+=== Compiler
+
+Le logiciel se compile via CMake (3.25 minimum).
+
+Utilisez build.sh (linux seulement), le logiciel compilé sera dans `build` sous le nom de `ServerClientComModule`
+
+=== Usage
+
+@TODO : écrire documentation pour expliquer comment utiliser le logiciel
