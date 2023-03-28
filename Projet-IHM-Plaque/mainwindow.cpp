@@ -106,7 +106,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
 {
 
      // Connexion à la base de donnée quand les informations de la partie Inscription, Connexion et Ajouter seront rentrés
-      database = QSqlDatabase::addDatabase("QMYSQL");
+      QSqlDatabase db  = QSqlDatabase::addDatabase("QMYSQL");
      database.setHostName("127.0.0.1");
      database.setPort(3306);
      database.setUserName("root");
@@ -158,6 +158,7 @@ void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscri
      else {
 
          QMessageBox::information(this, "Base de donnée", "La base de donnée n'est pas connecté");
+         // QSqlDatabase::lastError();
      }
 
  }
@@ -212,6 +213,9 @@ void MainWindow::on_pushButton_Annuler_Ajouter_clicked() // Si le bouton annuler
      ui->stackedWidget->setCurrentIndex(4);
 }
 
+
+
+// ###################### Partie AJOUTER NOUVEAU VISITEURS ####################
 
 void MainWindow::on_pushButton_3_enregistrer_clicked() // Bouton Enregistrer cliqué, renvoie un message confirmant l'enregistrement
 {

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
-    <height>600</height>
+    <width>485</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,21 +40,6 @@
        <string>Admin</string>
       </property>
      </widget>
-     <widget class="QListWidget" name="listWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>60</y>
-        <width>161</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>            Caméra 2</string>
-       </property>
-      </item>
-     </widget>
      <widget class="QPushButton" name="pushButton_Ouvrir_Menu">
       <property name="geometry">
        <rect>
@@ -80,21 +65,6 @@
       <property name="text">
        <string>Nombre de place disponible :  </string>
       </property>
-     </widget>
-     <widget class="QListWidget" name="listWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>161</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>             Caméra 1</string>
-       </property>
-      </item>
      </widget>
      <widget class="QPushButton" name="pushButton_4_Signaler_Menu">
       <property name="geometry">
@@ -158,6 +128,26 @@
        <string>Quitter</string>
       </property>
      </widget>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>60</y>
+        <width>141</width>
+        <height>131</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_2">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>60</y>
+        <width>141</width>
+        <height>131</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QLabel" name="label_3">
@@ -176,8 +166,8 @@
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>130</y>
+        <x>70</x>
+        <y>190</y>
         <width>63</width>
         <height>20</height>
        </rect>
@@ -189,8 +179,8 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>180</y>
+        <x>70</x>
+        <y>230</y>
         <width>63</width>
         <height>20</height>
        </rect>
@@ -229,7 +219,7 @@
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>230</y>
+        <y>90</y>
         <width>161</width>
         <height>20</height>
        </rect>
@@ -254,8 +244,8 @@
      <widget class="QCheckBox" name="checkBox_Enseignant_Ajouter">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>270</y>
+        <x>60</x>
+        <y>130</y>
         <width>111</width>
         <height>26</height>
        </rect>
@@ -267,8 +257,8 @@
      <widget class="QCheckBox" name="checkBox_2_Admin_Ajouter">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>270</y>
+        <x>210</x>
+        <y>130</y>
         <width>131</width>
         <height>26</height>
        </rect>
@@ -313,8 +303,8 @@
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>310</y>
+        <x>60</x>
+        <y>290</y>
         <width>271</width>
         <height>20</height>
        </rect>
@@ -326,8 +316,8 @@
      <widget class="QLineEdit" name="lineEdit_Prenom_Ajouter">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>180</y>
+        <x>150</x>
+        <y>230</y>
         <width>181</width>
         <height>28</height>
        </rect>
@@ -336,8 +326,8 @@
      <widget class="QLineEdit" name="lineEdit_2_Non_Ajouter">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>130</y>
+        <x>160</x>
+        <y>190</y>
         <width>181</width>
         <height>28</height>
        </rect>
@@ -656,7 +646,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>469</width>
+     <width>485</width>
      <height>25</height>
     </rect>
    </property>
