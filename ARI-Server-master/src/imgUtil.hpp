@@ -64,9 +64,6 @@ string getPlaque(string filename)
     Mat gray_image;
     cvtColor(original_image, gray_image, COLOR_BGR2GRAY);
 
-    // @TODO : trouver le problème qui fait que cette ligne fait crash le programme
-    //bilateralFilter(gray_image, gray_image, 11, 17, 17, 4);
-
     Mat edged_image;
     Canny(gray_image, edged_image, 30, 200);
 
@@ -107,7 +104,7 @@ string getPlaque(string filename)
         }
     }
     
-    // crash
+    // crash sans ça
     if(screenCnt.empty())
     {
         return "";

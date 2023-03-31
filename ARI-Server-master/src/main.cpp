@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <mysql/jdbc.h>
 
 #include <string>
 #include <cstdint>
@@ -13,6 +14,7 @@
 #include "camControl.hpp"
 #include "imgUtil.hpp"
 #include "server.hpp"
+#include "dataBase.hpp"
 
 using namespace std;
 
@@ -29,7 +31,7 @@ using namespace std;
 
 *********************************************************************/
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 
 // ip des deux caméras avec leur port
 string ips[2] = {"192.168.1.2", "192.168.0.4"};
@@ -41,7 +43,8 @@ int doit_exit = 1;
 
 int respond[2] = {0,0};
 /**
- * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible. Celle-ci est sauvegardée dans le dossier d'éxecution
+ * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible. 
+ * Celle-ci est sauvegardée dans le dossier d'éxecution
  * 
  * @param ip : IP de la caméra
  * @return rien normalement
@@ -52,7 +55,7 @@ void * loop(void * data)
     int old_response = 0;
     while(doit_exit)
     {
-        if(isClientLoggedIn || !DEBUG_MODE)
+        if(isClientLoggedIn)
         {
             // si la caméra est en ligne
             respond[_ip] = execute(ips[_ip], 1);
@@ -71,18 +74,38 @@ void * loop(void * data)
                 {
                     Log("La caméra " + ips[_ip] + " est revenue en ligne");
                 }
+
                 if(!execute(ips[_ip], 0))
                 {
                     send("ERROR_COULDNT_GET_IMAGE");
                     LogError("Impossible de récuperer une image de " + ips[_ip] + "(hors ligne ?)");
                     break;
-                }else
+                }
+                else
                 {
                     string plaque = getPlaque(ips[_ip] + ".jpg");
 
                     if(regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
                     {
                         Log(plaque);
+
+                        try
+                        {
+                            if(fetchDatabase(plaque))
+                            {
+                                Log("La plaque existe");
+                                //@TODO : implémenter logique de communication
+                            }
+                            else
+                            {
+                                LogError("La plaque " + plaque + " n'existe pas dans la base de donnée");
+                            }
+                        }
+                        catch(sql::SQLException &e)
+                        {
+                            LogError("Problème de base de donnée");
+                            LogError("Erreur : (" + to_string(e.getErrorCode()) + ")\n" + e.what());
+                        }
                     }
                 }   
             }    
@@ -114,11 +137,10 @@ int main()
     }
     initLogger("ServerSoftware");
     
-
     doit_exit = 1;
 
     // système simple pour savoir si les cams sont en ligne
-
+    #if !DEBUG_MODE
     int cam1 = execute(ips[0], 1);
     int cam2 = execute(ips[1], 1);
 
@@ -135,6 +157,43 @@ int main()
     }
 
     initWebSocket();
+
+    #endif
+
+    initDatabase();
+
+    #if DEBUG_MODE
+
+    Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
+    Log("");
+    Log("");
+    Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
+    Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
+    Log("");
+    Log("");
+    Log("[TEST] Plaque choisie pour le test : GE-543-NH");
+    Log("[TEST] Nom du fichier : 3.jpg");
+
+    string plaque = getPlaque("3.jpg");
+
+    if(plaque == "GE-543-NH")
+    {
+        Log("[TEST] L'image 3.jpg contient la plaque choisie pour les tests");
+        Log("");
+        Log("");
+        Log("[TEST] Notre environnement de test contient déjà cette plaque dans une base de donnée et devrait donc être visible");
+        if(fetchDatabase(plaque))
+        {
+            Log("La base de données contient notre plaque de test.");
+        }else{
+            LogError("Notre base de données ne contient pas la plaque");
+        }
+    }
+    else
+    {
+        LogError("[TEST] L'image 3.jpg ne contient pas la plaque, il s'agit d'une erreur.");
+    }
+    #endif
 
     char e;
     scanf("%c", &e);

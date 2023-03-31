@@ -29,12 +29,14 @@
 int execute(std::string ip, int ping)
 {
     // on va essayer de ping l'ip passée une fois
+    string cmd;
 
-    string cmd;// = 
-
-    if(ping){
+    if(ping)
+    {
         cmd = "ping -c 1 " + ip + " -W 1 -q > /dev/null 2>&1";
-    }else{
+    }
+    else
+    {
         cmd = "ffmpeg -y -i rtsp://" + ip + ":554 -frames:v 1 " + ip + ".jpg > /dev/null 2>&1";
     }
 
@@ -47,7 +49,9 @@ int execute(std::string ip, int ping)
         // donc en inversant le status, on retourne 1 si le ping est répondu, 0 si time out
         int ping_ret = WEXITSTATUS(status); 
         return !ping_ret;
-    }else{
+    }
+    else
+    {
         return 0;
     }
 }
