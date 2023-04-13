@@ -1,18 +1,17 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.25) # version de cmake pour compiler
 
 project(ARI-Server VERSION 0.1.0)
 
-set(CMAKE_C_FLAGS -pthread)
+set(CMAKE_C_FLAGS -pthread) # pthread permet d'utiliser le multithread pour nos routines
 
+# inclusion des librairies 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-set(MYSQL_PATH /home/sbn/mysql_header/)
-include_directories(${MYSQL_PATH}/include)
-link_directories(${MYSQL_PATH}/lib64)
-
-
+# ajoute WServer dans l'executable
 include_directories(src/include)
+
+# ajoute notre code
 add_executable(ARI-Server 
     src/main.cpp
     src/server.hpp
@@ -27,4 +26,6 @@ add_executable(ARI-Server
     src/wsServer/utf8.c
 )
 
-target_link_libraries(ARI-Server ${OpenCV_LIBS} -llept -ltesseract)
+# lie les librairies au lieu de les inclure, ça rend le code plus leger mais demande 
+# d'installer les headers sur la machine source
+target_link_libraries(ARI-Server ${OpenCV_LIBS} mysqlclient -llept -ltesseract)

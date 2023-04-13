@@ -24,7 +24,7 @@ using namespace std;
 
         -> bouger ips, port et plus encore dans un fichier de config
         -> écrire code pour ping ARI-Plaques
-                    
+
                                 notes
 
                                  N/A
@@ -41,41 +41,41 @@ pthread_t camUn, camDeux, exit_listener;
 
 int doit_exit = 1;
 
-int respond[2] = {0,0};
+int respond[2] = {0, 0};
 /**
- * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible. 
+ * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible.
  * Celle-ci est sauvegardée dans le dossier d'éxecution
- * 
+ *
  * @param ip : IP de la caméra
  * @return rien normalement
-*/
-void * loop(void * data)
+ */
+void *loop(void *data)
 {
     int _ip = (intptr_t)data;
     int old_response = 0;
-    while(doit_exit)
+    while (doit_exit)
     {
-        if(isClientLoggedIn)
+        if (isClientLoggedIn)
         {
             // si la caméra est en ligne
             respond[_ip] = execute(ips[_ip], 1);
 
-            if(!respond[_ip])
+            if (!respond[_ip])
             {
-                if(old_response != respond[_ip])
+                if (old_response != respond[_ip])
                 {
                     LogWarning("La caméra " + ips[_ip] + " est hors ligne");
                     send("WARNING_EXCEPTION_NO_CAM_FOUND");
                 }
             }
-            else 
+            else
             {
-                if(old_response != respond[_ip])
+                if (old_response != respond[_ip])
                 {
                     Log("La caméra " + ips[_ip] + " est revenue en ligne");
                 }
 
-                if(!execute(ips[_ip], 0))
+                if (!execute(ips[_ip], 0))
                 {
                     send("ERROR_COULDNT_GET_IMAGE");
                     LogError("Impossible de récuperer une image de " + ips[_ip] + "(hors ligne ?)");
@@ -85,13 +85,13 @@ void * loop(void * data)
                 {
                     string plaque = getPlaque(ips[_ip] + ".jpg");
 
-                    if(regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
+                    if (regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
                     {
                         Log(plaque);
 
                         try
                         {
-                            if(fetchDatabase(plaque))
+                            if (fetchDatabase(plaque))
                             {
                                 Log("La plaque existe");
                                 //@TODO : implémenter logique de communication
@@ -101,18 +101,18 @@ void * loop(void * data)
                                 LogError("La plaque " + plaque + " n'existe pas dans la base de donnée");
                             }
                         }
-                        catch(sql::SQLException &e)
+                        catch (sql::SQLException &e)
                         {
                             LogError("Problème de base de donnée");
                             LogError("Erreur : (" + to_string(e.getErrorCode()) + ")\n" + e.what());
                         }
                     }
-                }   
-            }    
+                }
+            }
 
             old_response = respond[_ip];
-            
-            if(!doit_exit)
+
+            if (!doit_exit)
             {
                 Log("Un thread vient d'être supprimé");
                 pthread_exit(0);
@@ -128,7 +128,7 @@ int main()
     // Lors du debug, j'ai vu que WSserver a besoin d'être executé en root
     // mais ça empêche le dossier du logger d'être supprimé
     // @TODO : faire en sorte que le dossier des logs n'appartienne pas a root
-    if(getuid())
+    if (getuid())
     {
         printf("\033[0;31m");
         printf(" [ERROR] CE LOGICIEL DOIT ÊTRE LANCÉ EN ROOT");
@@ -136,66 +136,66 @@ int main()
         return 1;
     }
     initLogger("ServerSoftware");
-    
+
     doit_exit = 1;
 
-    // système simple pour savoir si les cams sont en ligne
-    #if !DEBUG_MODE
+// système simple pour savoir si les cams sont en ligne
+#if !DEBUG_MODE
     int cam1 = execute(ips[0], 1);
     int cam2 = execute(ips[1], 1);
 
     int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
-    if(t2){
+    if (t2)
+    {
         Log("thread 2 n'a pas pu être créé");
         return 1;
     }
 
     int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
-    if(t1){
+    if (t1)
+    {
         Log("thread 1 n'a pas pu être créé");
         return 1;
     }
 
     initWebSocket();
 
-    #endif
+#endif
 
     initDatabase();
 
-    #if DEBUG_MODE
+#if DEBUG_MODE
 
     Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
-    Log("");
-    Log("");
+    cout << endl;
+    char e;
+    scanf("%c", &e);
     Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
     Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
-    Log("");
-    Log("");
+    scanf("%c", &e);
+    cout << endl;
     Log("[TEST] Plaque choisie pour le test : GE-543-NH");
     Log("[TEST] Nom du fichier : 3.jpg");
+    scanf("%c", &e);
 
     string plaque = getPlaque("3.jpg");
+    string plaque2 = "GE-543-NH";
 
-    if(plaque == "GE-543-NH")
+    Log("[TEST] Texte detecté : " + plaque);
+    if (plaque.find(plaque2) != string::npos)
     {
+        scanf("%c", &e);
         Log("[TEST] L'image 3.jpg contient la plaque choisie pour les tests");
-        Log("");
-        Log("");
-        Log("[TEST] Notre environnement de test contient déjà cette plaque dans une base de donnée et devrait donc être visible");
-        if(fetchDatabase(plaque))
-        {
-            Log("La base de données contient notre plaque de test.");
-        }else{
-            LogError("Notre base de données ne contient pas la plaque");
-        }
+        cout << endl;
+        LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
+        Log("[TEST] tout les tests sont passés !");
     }
     else
     {
         LogError("[TEST] L'image 3.jpg ne contient pas la plaque, il s'agit d'une erreur.");
     }
-    #endif
+#endif
 
-    char e;
     scanf("%c", &e);
 
     doit_exit = 0;

@@ -12,7 +12,7 @@ RUN cd /ari-dev
 RUN apt install -yq g++ wget unzip build-essential iputils-ping xterm ffmpeg
 
 RUN apt install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr
-RUN apt install -y tesseract-ocr-all 
+RUN apt install -y tesseract-ocr-all libmysqlcppconn-dev
 
 # installation de cmake    
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh &&\
