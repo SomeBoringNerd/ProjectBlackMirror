@@ -6,12 +6,15 @@ Il connecte l'IA, la base de donnée, le client et les micro-controllers divers 
 
 Choix du langage : C++ car Tesseract-OCR et OpenCV ne supportent pas/plus le C.
 
-libs utilisées : fork de https://github.com/Theldus/wsServer[wsServer] afin de l'adapter a nos besoins
+libs utilisées : 
+https://github.com/Theldus/wsServer[wsServer] Pour la communication serveur / client
+
+https://github.com/pulzed/mINI[mINI] pour le fichier de config .ini
 
 === Projet BlackMirror : Informations en bloc
 ==== main.cpp
 
-Main.c est le coeur du programme, il fonctionne sur le serveur et gère toutes les parties mouvante sur le serveur,
+Main.cpp est le coeur du programme, il fonctionne sur le serveur et gère toutes les parties mouvante sur le serveur,
 
 allant de la base de données a la reconnaissance de texte, du controle réseau et bien plus encore.
 

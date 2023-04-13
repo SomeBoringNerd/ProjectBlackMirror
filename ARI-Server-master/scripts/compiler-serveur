@@ -1,14 +1,10 @@
 #!/bin/sh
 
-cd ../
+if [ "$EUID" -ne 0 ]
+  then echo "Ce script doit être executé en tant que root"
+  exit
+fi
 
-# supprime ancien dossier de build et le refait
-rm -rf build
-mkdir build
-cd build
+docker build -t pbm/serveur ../
 
-# genère la solution du projet
-cmake build ../
-
-# compile le projet en un éxecutable
-cmake --build ./
+./get-exec-from-serveur
