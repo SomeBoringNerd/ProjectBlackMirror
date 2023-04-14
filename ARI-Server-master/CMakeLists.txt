@@ -9,27 +9,6 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 
-# code pour installer mysql header 
-# note : j'ai envie de crever ceci est un appel a l'aide que personne ne peut voir ou entendre
-# vu que je vais devoir enlever ce commentaire avant de rendre le repos publique
-find_package(mysqlclient 1.1.9 QUIET)
-if (NOT mysqlclient_FOUND)
-  include(FetchContent)
-  FetchContent_Declare(
-    mysqlclient
-    URL https://cdn.mysql.com//archives/mysql-connector-c++/mysql-connector-c++-1.1.9.tar.gz
-  )
-  FetchContent_GetProperties(mysqlclient)
-  if (NOT mysqlclient_POPULATED)
-    set(FETCHCONTENT_QUIET NO)
-    FetchContent_Populate(mysqlclient)
-    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    add_subdirectory(${mysqlclient_SOURCE_DIR} ${mysqlclient_BINARY_DIR})
-  endif()
-endif()
-
-
-
 # ajoute WServer dans l'executable
 include_directories(src/include)
 

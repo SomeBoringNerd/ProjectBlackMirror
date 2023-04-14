@@ -1,10 +1,15 @@
+#define ALLOW_DATABASE 1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/wait.h>
 #include <stdint.h>
 #include <unistd.h>
-#include <mysql/jdbc.h>
+
+#if ALLOW_DATABASE
+#include "include/mysql/jdbc.h"
+#endif
 
 #include <string>
 #include <cstdint>
@@ -15,8 +20,6 @@
 #include "imgUtil.hpp"
 #include "server.hpp"
 #include "dataBase.hpp"
-
-using namespace std;
 
 /********************************************************************
 
@@ -88,7 +91,7 @@ void *loop(void *data)
                     if (regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
                     {
                         Log(plaque);
-
+#if ALLOW_DATABASE
                         try
                         {
                             if (fetchDatabase(plaque))
@@ -106,6 +109,7 @@ void *loop(void *data)
                             LogError("Problème de base de donnée");
                             LogError("Erreur : (" + to_string(e.getErrorCode()) + ")\n" + e.what());
                         }
+#endif
                     }
                 }
             }
@@ -161,8 +165,9 @@ int main()
     initWebSocket();
 
 #endif
-
+#if ALLOW_DATABASE
     initDatabase();
+#endif
 
 #if DEBUG_MODE
 
