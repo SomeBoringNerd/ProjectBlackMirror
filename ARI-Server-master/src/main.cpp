@@ -1,4 +1,4 @@
-#define ALLOW_DATABASE 1
+#define ALLOW_DATABASE 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +21,8 @@
 #include "server.hpp"
 #include "dataBase.hpp"
 
+#include "mini/ini.h"
+
 /********************************************************************
 
                                 todos
@@ -37,7 +39,7 @@
 #define DEBUG_MODE 1
 
 // ip des deux caméras avec leur port
-string ips[2] = {"192.168.1.2", "192.168.0.4"};
+std::string ips[2] = {"192.168.1.2", "192.168.0.4"};
 
 // note : apparemment mettre les variables pthread_t en local fait un SIGDEV violation
 pthread_t camUn, camDeux, exit_listener;
@@ -86,9 +88,9 @@ void *loop(void *data)
                 }
                 else
                 {
-                    string plaque = getPlaque(ips[_ip] + ".jpg");
+                    std::string plaque = getPlaque(ips[_ip] + ".jpg");
 
-                    if (regex_match(plaque, regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
+                    if (regex_match(plaque, std::regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
                     {
                         Log(plaque);
 #if ALLOW_DATABASE
@@ -127,6 +129,30 @@ void *loop(void *data)
     return 0;
 }
 
+void initConfig()
+{
+    mINI::INIFile file("config.ini");
+    mINI::INIStructure ini;
+    file.read(ini);
+
+    ips[0] = ini["devices"]["cam1"];
+    ips[1] = ini["devices"]["cam2"];
+
+    port = stoi(ini["wsserver"]["ws_port"]);
+
+    std::string ip_serveur = (ini["database"]["ip"]);
+    std::string base_port = (ini["database"]["port"]);
+
+#if DEBUG_MODE
+    Log("IP de la première caméra : " + ips[0]);
+    Log("IP de la deuxième caméra : " + ips[1]);
+    Log("Port du websocket : " + std::to_string(port));
+    std::cout << std::endl;
+    Log("IP du serveur : " + ip_serveur);
+    Log("Port de la base de données : " + base_port);
+#endif
+}
+
 int main()
 {
     // Lors du debug, j'ai vu que WSserver a besoin d'être executé en root
@@ -139,7 +165,9 @@ int main()
         printf("\n\033[0;0m");
         return 1;
     }
+
     initLogger("ServerSoftware");
+    initConfig();
 
     doit_exit = 1;
 
@@ -172,26 +200,26 @@ int main()
 #if DEBUG_MODE
 
     Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
-    cout << endl;
+    std::cout << std::endl;
     char e;
     scanf("%c", &e);
     Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
     Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
     scanf("%c", &e);
-    cout << endl;
-    Log("[TEST] Plaque choisie pour le test : GE-543-NH");
-    Log("[TEST] Nom du fichier : 3.jpg");
+    std::cout << std::endl;
+    Log("[TEST] Plaque choisie pour le test : GD-144-QH");
+    Log("[TEST] Nom du fichier : test.jpg");
     scanf("%c", &e);
 
-    string plaque = getPlaque("3.jpg");
-    string plaque2 = "GE-543-NH";
+    std::string plaque = getPlaque("2.jpg");
+    std::string plaque2 = "GD-144-QH";
 
     Log("[TEST] Texte detecté : " + plaque);
-    if (plaque.find(plaque2) != string::npos)
+    if (plaque.find(plaque2) != std::string::npos)
     {
         scanf("%c", &e);
-        Log("[TEST] L'image 3.jpg contient la plaque choisie pour les tests");
-        cout << endl;
+        Log("[TEST] L'image test.jpg contient la plaque choisie pour les tests");
+        std::cout << std::endl;
         LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
         Log("[TEST] tout les tests sont passés !");
     }

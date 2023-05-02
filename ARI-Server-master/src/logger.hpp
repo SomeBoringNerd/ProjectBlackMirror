@@ -1,5 +1,4 @@
-#ifndef HEADER_LOGGER
-#define HEADER_LOGGER
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,24 +6,20 @@
 
 #include <iostream>
 
-using namespace std;
-
-string _name;
+std::string _name;
 
 FILE *_log;
 
-using namespace std;
-
 /**
  * Je présente mes plus sincères excuses a ceux qui ont une meilleure idée de comment faire ça
- * 
+ *
  * @param appname : nom de l'application, doit être unique
-*/
-int initLogger(string appname)
+ */
+int initLogger(std::string appname)
 {
     /*
     _name = appname;
-    
+
     char buffer[128];
     #ifdef __unix__
     snprintf(buffer, sizeof(buffer), "mkdir %s && touch ./%s/log.txt", appname, appname);
@@ -35,11 +30,11 @@ int initLogger(string appname)
 
     snprintf(buffer, sizeof(_buffer), "mkdir %s", appname);
     snprintf(_buffer, sizeof(_buffer), "type nul >> %s/log.txt", appname);
-    
+
     system(buffer);
     system(_buffer);
     #endif
-    
+
     char file[256];
     snprintf(file, sizeof(file), "./%s/log.txt", _name);
 
@@ -48,29 +43,27 @@ int initLogger(string appname)
     return 0;
 }
 
-void toFile(string texte)
+void toFile(std::string texte)
 {
     printf(texte.c_str());
-    //fprintf(_log, texte);
+    // fprintf(_log, texte);
 }
 
-void Log(string texte)
+void Log(std::string texte)
 {
     toFile("[LOG] : " + texte + "\n");
 }
 
-void LogError(string texte)
+void LogError(std::string texte)
 {
     printf("\033[0;31m");
     toFile("[ERROR] : " + texte + "\n");
     printf("\n\033[0;0m");
 }
 
-void LogWarning(string texte)
+void LogWarning(std::string texte)
 {
     printf("\033[0;33m");
     toFile("[WARNING] : " + texte + "\n");
     printf("\n\033[0;0m");
 }
-
-#endif

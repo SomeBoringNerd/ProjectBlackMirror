@@ -11,8 +11,8 @@ RUN apt update && apt install -y tzdata
 RUN cd /ari-dev
 RUN apt install -yq g++ wget unzip build-essential iputils-ping xterm ffmpeg libmysqlcppconn-dev
 
-RUN apt install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr
-RUN apt install -y tesseract-ocr-all
+RUN apt install -y software-properties-common
+RUN add-apt-repository ppa:alex-p/tesseract-ocr-devel && apt update && apt install -y tesseract-ocr-all
 
 # installation de cmake    
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.0-rc5/cmake-3.26.0-rc5-linux-x86_64.sh -O cmake-build.sh &&\
@@ -38,6 +38,8 @@ RUN echo Compilation du logiciel serveur
 ADD ./CMakeLists.txt /ari-dev
 
 COPY ./src /ari-dev/src
+
+RUN ls /usr/include
 
 RUN rm -rf /ari-dev/build
 

@@ -1,5 +1,4 @@
-#ifndef HEADER_SERVER
-#define HEADER_SERVER
+#pragma once
 
 #include "include/ws.h"
 #include <stdio.h>
@@ -11,22 +10,19 @@
 ws_cli_conn_t *client;
 int isClientLoggedIn = 0;
 
-
-int port = 34;
-
+int port = 0;
 
 /********************************************************************
 
-		Base de donnée et autre joyeusetées
+        Base de donnée et autre joyeusetées
 
 *********************************************************************/
 
 /**
- * @brief Valide la connexion au serveur. 
- */ 
-void Login(char* username, char* password)
+ * @brief Valide la connexion au serveur.
+ */
+void Login(char *username, char *password)
 {
-	
 }
 
 /********************************************************************
@@ -41,7 +37,8 @@ void Login(char* username, char* password)
 void onopen(ws_cli_conn_t *_client)
 {
     // Si le client est déjà connecté on ne va pas accepter une connexion
-    if(client != NULL) return;
+    if (client != NULL)
+        return;
 
     client = _client;
 
@@ -73,25 +70,28 @@ void onmessage(ws_cli_conn_t *_client, const unsigned char *msg, uint64_t msg_si
 {
     char *cli, *con_ip;
     con_ip = ws_getaddress(_client);
-    cli =    ws_getaddress(client);
+    cli = ws_getaddress(client);
 
-    if(cli != con_ip) return;
+    if (cli != con_ip)
+        return;
 
     /*if(msg == "test_comm")
     {
-	    Log("Message reçu du client");
+        Log("Message reçu du client");
     }*/
 }
 /**
  * @brief Wrapper de la fonction ws_sendframe_txt avec un check pour savoir si le client est connecté
  * @param message : message a envoyer au client actif
-*/
-void send(char * message)
+ */
+void send(char *message)
 {
-    if(client != NULL || !isClientLoggedIn)
+    if (client != NULL || !isClientLoggedIn)
     {
         ws_sendframe_txt(client, message);
-    }else{
+    }
+    else
+    {
         LogError("Tentative d'envoyer un message au serveur mais aucun client n'est connecté");
     }
 }
@@ -99,11 +99,9 @@ void send(char * message)
 void initWebSocket()
 {
     struct ws_events evs;
-    evs.onopen    = &onopen;
-    evs.onclose   = &onclose;
+    evs.onopen = &onopen;
+    evs.onclose = &onclose;
     evs.onmessage = &onmessage;
 
     ws_socket(&evs, port, 0, 1000);
 }
-
-#endif

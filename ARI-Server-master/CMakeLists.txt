@@ -8,6 +8,8 @@ set(CMAKE_C_FLAGS -pthread) # pthread permet d'utiliser le multithread pour nos 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
+include_directories( /usr/include/ )
+
 
 # ajoute WServer dans l'executable
 include_directories(src/include)
@@ -30,4 +32,4 @@ add_executable(ARI-Server
 
 # lie les librairies au lieu de les inclure, ça rend le code plus leger mais demande 
 # d'installer les headers sur la machine source
-target_link_libraries(ARI-Server ${OpenCV_LIBS} mysqlclient -llept -ltesseract)
+target_link_libraries(ARI-Server ${OpenCV_LIBS} -lleptonica -ltesseract)
