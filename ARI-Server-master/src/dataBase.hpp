@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if ALLOW_DATABASE
+#if !ALLOW_DATABASE
 #include "jdbc/mysql_connection.h"
 
 #include "include/jdbc/cppconn/driver.h"
@@ -37,7 +37,7 @@ void initDatabase()
  * @param plaque le texte sur la plaque d'immatriculation au format AA-123-BB
  * @return 1 si la plaque existe.
  */
-int fetchDatabase(string plaque)
+int fetchDatabase(std::string plaque)
 {
     int e = 0;
     stmt->execute("SELECT * FROM Utilisateurs WHERE Plaque=\"" + plaque + "\";");

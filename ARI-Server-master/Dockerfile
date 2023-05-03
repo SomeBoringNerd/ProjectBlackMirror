@@ -49,8 +49,8 @@ RUN mkdir /ari-dev/build &&\
     cmake --build /ari-dev/build &&\
     chmod +x /ari-dev/build/ARI-Server
 
-ADD ./Exec_env/config.ini /ari-dev/build
-ADD ./build/2.jpg /ari-dev
+ADD ./Exec_env/config.ini /ari-dev
+ADD ./Exec_env/2.jpg /ari-dev
 
 RUN ls /ari-dev/build
 

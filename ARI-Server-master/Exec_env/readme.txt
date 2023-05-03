@@ -1,5 +1,5 @@
 Ce dossier sert a executer le logiciel serveur sur ma machine de test.
 
-Pour ne pas m'embeter avec les dépendances je build le logiciel via docker et je l'envoie du container a ce dossier via le script get-exec-from-docker dans le dossier scripts.
+Vous retrouverai ici les images servant a tester le code ainsi qu'un fichier de config par défaut
 
-si je commit une build ici veuillez ne pas l'utiliser vu que c'est surement pas prod ready.
+notez que normalement il y'a aucune build du logiciel ici mais si y'en a une je déconseille de l'utiliser

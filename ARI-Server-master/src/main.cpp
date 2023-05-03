@@ -135,8 +135,7 @@ void initConfig()
     system("ls");
     std::cout << std::endl;
     system("ls build/");
-    mINI::INIFile file("/ari-dev/build/config.ini");
-    // mINI::INIFile file("config.ini");
+    mINI::INIFile file("config.ini");
     mINI::INIStructure ini;
     file.read(ini);
 

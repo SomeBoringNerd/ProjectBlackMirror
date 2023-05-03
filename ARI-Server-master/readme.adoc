@@ -12,7 +12,7 @@ https://github.com/Theldus/wsServer[wsServer] Pour la communication serveur / cl
 https://github.com/pulzed/mINI[mINI] pour le fichier de config .ini
 
 === Projet BlackMirror : Informations en bloc
-==== main.cpp
+=== main.cpp
 
 Main.cpp est le coeur du programme, il fonctionne sur le serveur et gère toutes les parties mouvante sur le serveur,
 
@@ -29,9 +29,9 @@ allant de la base de données a la reconnaissance de texte, du controle réseau 
 | première fonction a s'éxecuter, initialise le logger, le serveur websocket, et ping les différents appareils réseaux requis.
 | N/A
 
-| `int pingCam(char* ip)`
-| Ping une addresse ip pour savoir si une caméra est sur le réseau local.
-| ip : ip de l'appareil a ping (duh)
+| `void initConfig()`
+| intitialise les différentes variables du programme grâce au fichier de configuration
+| N/A
 
 | `int loop()`
 | permet au serveur d'envoyer des packets au client si il est connecté
@@ -52,7 +52,7 @@ allant de la base de données a la reconnaissance de texte, du controle réseau 
 
 |===
 
-==== camControl.hpp
+=== camControl.hpp
 
 Ce header contient le code lié au controle des caméras, c'est a dire les pinger et récuperer une capture d'écran
 du flux vidéo en direct.
@@ -70,7 +70,7 @@ du flux vidéo en direct.
 
 |===
 
-==== imgUtil.hpp
+=== imgUtil.hpp
 
 S'occupe de la reconnaissance de texte sur la capture d'écran.
 
@@ -90,7 +90,7 @@ S'occupe de la reconnaissance de texte sur la capture d'écran.
 | filename : nom du fichier de l'image avec extention (path relatif)
 |===
 
-==== logger.hpp
+=== logger.hpp
 
 Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du serveur et le client QT.
 
@@ -140,7 +140,94 @@ Il s'agit d'un système de log fait maison qui est utilisé par les logiciels du
 
 |===
 
+=== dataBase.hpp
+
+Wrapper de Mysql connector pour simplifier les choses
+
+===== Fonctions
+[cols="~,~,~"]
+|===
+| nom complet 
+| Explications 
+| Paramètres
+
+| `int initDatabase()`
+| Fonction appelée avant usage de la base de données
+| N/A
+
+| `int fetchDatabase(string plaque)`
+| Fetch la plaque donnée dans la base de donnée, et retourne 1 si elle existe, 0 sinon
+| plaque : string contenant la plaque d'immatriculation (ce string est préalablement passé dans un regex check avant pour éviter des mauvais)
+
+|===
+
+===== Variables
+[cols="~,~,~"]
+|===
+| Fonctions 
+| Explications 
+| Default
+
+| `sql::Driver *driver`
+| Driver permettant de se connecter a la base de données
+| N/A
+
+| `std::auto_ptr<sql::Connection> con(driver->connect(HOST, USER, PASS));`
+| Connexion a la base de données elle même
+| N/A
+
+| `std::auto_ptr<sql::Statement> stmt(con->createStatement());`
+| Permet de faire des request Mysql
+| N/A
+
+|===
+
+=== imgUtil.hpp
+
+Système de reconnaissance d'image fait maison utilisant OpenCV et Tesseract OCR
+
+===== Fonctions
+[cols="~,~,~"]
+|===
+| nom complet 
+| Explications 
+| Paramètres
+
+| `std::string getProperName(std::string _plaque)`
+| Prend le text brute de l'image et enlève les characteres inutiles (et remplace certaines erreurs)
+| _plaque : Texte de la plaque
+
+| `std::string getPlaque(std::string filename)`
+| Tente de determiner ce qui ressemble a une plaque d'immatriculation sur l'image
+| filename : nom de l'image avec extention (doit être dans le dossier d'execution, /ari-dev/ dans docker, ./Exec_env sans docker)
+
+|===
+
+===== Variables
+[cols="~,~,~"]
+|===
+| Fonctions 
+| Explications 
+| Default
+
+| `sql::Driver *driver`
+| Driver permettant de se connecter a la base de données
+| N/A
+
+| `std::auto_ptr<sql::Connection> con(driver->connect(HOST, USER, PASS));`
+| Connexion a la base de données elle même
+| N/A
+
+| `std::auto_ptr<sql::Statement> stmt(con->createStatement());`
+| Permet de faire des request Mysql
+| N/A
+
+|===
+
 === Déploiment
+
+https://hitchdev.com/strictyaml/why-not/ini/[tout d'abord, allez dans le dossier Exec_env et remplacez les valeurs devant l'être dans le fichier config.ini]
+
 ===== Via Docker
 Construire l'image docker :
 `sudo docker build -t pbm/serveur .`
@@ -158,16 +245,11 @@ Notre serveur est sous Ubuntu server, donc il utilise APT. Pour les distros bas�
 
 Le script va installer toute les dependances du logiciel, y compris les outils pour le compiler (lui et d'autres dépendances).
 
-dépendances : g++, wget, unzip, build-essential, iputils-ping, cmake, opencv, ffmpeg et xterm
-
-Le script va build (et installer) cmake et opencv
-
 ====== >compiler-serveur
 
-Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Server.
+Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Server. et l'executer
 
 A noter qu'il faut lancer le logiciel en root.
-
 
 === A faire : 
 

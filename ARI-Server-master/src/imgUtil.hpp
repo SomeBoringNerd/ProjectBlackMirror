@@ -93,6 +93,10 @@ std::string getPlaque(std::string filename)
         double contour_perimeter = arcLength(c, true);
         std::vector<cv::Point> approx;
         approxPolyDP(c, approx, 0.018 * contour_perimeter, true);
+        
+        #if DEBUG_MODE
+        Log("Approximation : " + approx.size());
+        #endif
 
         if (approx.size() == 4)
         {

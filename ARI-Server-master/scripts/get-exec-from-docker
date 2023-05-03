@@ -1,1 +1,0 @@
-docker cp ari_pbm:/ari-dev/build/ARI-Server ../Exec_env
