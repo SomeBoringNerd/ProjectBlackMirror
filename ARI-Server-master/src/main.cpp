@@ -131,7 +131,12 @@ void *loop(void *data)
 
 void initConfig()
 {
-    mINI::INIFile file("config.ini");
+    std::cout << "Lecture du fichier de config" << std::endl;
+    system("ls");
+    std::cout << std::endl;
+    system("ls build/");
+    mINI::INIFile file("/ari-dev/build/config.ini");
+    // mINI::INIFile file("config.ini");
     mINI::INIStructure ini;
     file.read(ini);
 
@@ -143,14 +148,12 @@ void initConfig()
     std::string ip_serveur = (ini["database"]["ip"]);
     std::string base_port = (ini["database"]["port"]);
 
-#if DEBUG_MODE
     Log("IP de la première caméra : " + ips[0]);
     Log("IP de la deuxième caméra : " + ips[1]);
     Log("Port du websocket : " + std::to_string(port));
     std::cout << std::endl;
     Log("IP du serveur : " + ip_serveur);
     Log("Port de la base de données : " + base_port);
-#endif
 }
 
 int main()
@@ -202,14 +205,11 @@ int main()
     Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
     std::cout << std::endl;
     char e;
-    scanf("%c", &e);
     Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
     Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
-    scanf("%c", &e);
     std::cout << std::endl;
     Log("[TEST] Plaque choisie pour le test : GD-144-QH");
-    Log("[TEST] Nom du fichier : test.jpg");
-    scanf("%c", &e);
+    Log("[TEST] Nom du fichier : 2.jpg");
 
     std::string plaque = getPlaque("2.jpg");
     std::string plaque2 = "GD-144-QH";
@@ -217,7 +217,6 @@ int main()
     Log("[TEST] Texte detecté : " + plaque);
     if (plaque.find(plaque2) != std::string::npos)
     {
-        scanf("%c", &e);
         Log("[TEST] L'image test.jpg contient la plaque choisie pour les tests");
         std::cout << std::endl;
         LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
@@ -227,6 +226,8 @@ int main()
     {
         LogError("[TEST] L'image 3.jpg ne contient pas la plaque, il s'agit d'une erreur.");
     }
+
+    return 0;
 #endif
 
     scanf("%c", &e);

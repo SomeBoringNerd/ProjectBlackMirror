@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.25) # version de cmake pour compiler
 project(ARI-Server VERSION 0.1.0)
 
 set(CMAKE_C_FLAGS -pthread) # pthread permet d'utiliser le multithread pour nos routines
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 # inclusion des librairies 
 find_package( OpenCV REQUIRED )

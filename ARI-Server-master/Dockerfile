@@ -33,13 +33,13 @@ RUN cd build/ && ls && make install
 
 RUN cd /ari-dev
 
+RUN apt -yq install libtesseract-dev libblis-pthread-dev
+
 RUN echo Compilation du logiciel serveur
 
 ADD ./CMakeLists.txt /ari-dev
 
 COPY ./src /ari-dev/src
-
-RUN ls /usr/include
 
 RUN rm -rf /ari-dev/build
 
@@ -50,5 +50,8 @@ RUN mkdir /ari-dev/build &&\
     chmod +x /ari-dev/build/ARI-Server
 
 ADD ./Exec_env/config.ini /ari-dev/build
+ADD ./build/2.jpg /ari-dev
+
+RUN ls /ari-dev/build
 
 CMD ["/ari-dev/build/ARI-Server"]
