@@ -192,7 +192,7 @@ Système de reconnaissance d'image fait maison utilisant OpenCV et Tesseract OCR
 | nom complet 
 | Explications 
 | Paramètres
-
+ 
 | `std::string getProperName(std::string _plaque)`
 | Prend le text brute de l'image et enlève les characteres inutiles (et remplace certaines erreurs)
 | _plaque : Texte de la plaque
