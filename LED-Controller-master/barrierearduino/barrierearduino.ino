@@ -45,8 +45,7 @@ void setup()
 
     server.on("/toggle", toggle);
     server.begin();
-    delay(30000);
-
+    
     Serial.println("Serveur web actif!");
 }
 
