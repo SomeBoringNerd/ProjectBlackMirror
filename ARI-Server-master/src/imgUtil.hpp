@@ -93,10 +93,6 @@ std::string getPlaque(std::string filename)
         double contour_perimeter = arcLength(c, true);
         std::vector<cv::Point> approx;
         approxPolyDP(c, approx, 0.018 * contour_perimeter, true);
-        
-        #if DEBUG_MODE
-        Log("Approximation : " + approx.size());
-        #endif
 
         if (approx.size() == 4)
         {
@@ -123,9 +119,11 @@ std::string getPlaque(std::string filename)
     tesseract::TessBaseAPI tess;
     tess.Init(NULL, "fra", tesseract::OEM_LSTM_ONLY);
     tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
-    system("ls && ls build/");
+
     tess.SetImage(cv::imread(cropped_License_Plate).data, cv::imread(cropped_License_Plate).cols, cv::imread(cropped_License_Plate).rows, 3, cv::imread(cropped_License_Plate).step);
     std::string text = tess.GetUTF8Text();
-
+#if DEBUG_MODE
+    Log("texte detecté sur l'image : " + text);
+#endif
     return getProperName(text);
 }

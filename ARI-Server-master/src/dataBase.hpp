@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if !ALLOW_DATABASE
+#if ALLOW_DATABASE
 #include "jdbc/mysql_connection.h"
 
 #include "include/jdbc/cppconn/driver.h"

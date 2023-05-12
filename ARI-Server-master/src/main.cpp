@@ -36,7 +36,7 @@
 
 *********************************************************************/
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 // ip des deux caméras avec leur port
 std::string ips[2] = {"192.168.1.2", "192.168.0.4"};
@@ -132,9 +132,7 @@ void *loop(void *data)
 void initConfig()
 {
     std::cout << "Lecture du fichier de config" << std::endl;
-    system("ls");
-    std::cout << std::endl;
-    system("ls build/");
+
     mINI::INIFile file("config.ini");
     mINI::INIStructure ini;
     file.read(ini);
@@ -175,21 +173,46 @@ int main()
 
 // système simple pour savoir si les cams sont en ligne
 #if !DEBUG_MODE
-    int cam1 = execute(ips[0], 1);
-    int cam2 = execute(ips[1], 1);
 
-    int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
-    if (t2)
+    respond[0] = execute(ips[0], 1);
+    respond[1] = execute(ips[1], 1);
+
+    if (respond[0])
     {
-        Log("thread 2 n'a pas pu être créé");
-        return 1;
+        int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
+        if (t1)
+        {
+
+            Log("thread 1 n'a pas pu être créé");
+            return 1;
+        }
+        else
+        {
+            Log("Le thread cam 1 a été créé");
+        }
+    }
+    else
+    {
+        Log("La caméra n'a pas répondu au ping");
     }
 
-    int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
-    if (t1)
+    if (respond[1])
     {
-        Log("thread 1 n'a pas pu être créé");
-        return 1;
+        int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
+        if (t2)
+        {
+
+            Log("thread 2  n'a pas pu être créé");
+            return 1;
+        }
+        else
+        {
+            Log("Le thread cam 2 a été créé");
+        }
+    }
+    else
+    {
+        Log("La caméra n'a pas répondu au ping");
     }
 
     initWebSocket();
@@ -198,12 +221,12 @@ int main()
 #if ALLOW_DATABASE
     initDatabase();
 #endif
-
+    char e;
 #if DEBUG_MODE
 
     Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
     std::cout << std::endl;
-    char e;
+
     Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
     Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
     std::cout << std::endl;
