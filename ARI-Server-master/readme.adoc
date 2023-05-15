@@ -251,6 +251,17 @@ Compile le logiciel serveur. Il sera dans le dossier build sous le nom de ARI-Se
 
 A noter qu'il faut lancer le logiciel en root.
 
+=== >État des tests + notes supplémentaires
+
+Test unitaires : passent la majorité du temps (voir notes supplémentaires)
+
+Test en condition réelles (avec une caméra) : passent la majorité du temps (voir notes supplémentaires)
+
+====== >Notes supplémentaires
+
+Pour que le code fonctionne, il faut que la plaque d'immatriculation forme un rectangle et qu'il n'y ai ni reflection ou que y'ai de la lumière trop intense près de la caméra
+Exemple d'image ne marchant pas :
+https://raw.githubusercontent.com/SomeBoringNerd/ProjectBlackMirror/main/ARI-Server-master/images/good_example_clean.png
 === A faire : 
 
 > relier a la base de données

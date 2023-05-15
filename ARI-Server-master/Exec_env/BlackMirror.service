@@ -1,0 +1,7 @@
+[Unit]
+Description=ARI-Server est un logiciel avancé de reconnaissance de plaque d'immatriculation de la suite de logiciels BlackMirror
+
+[Service]²
+ExecStart=/usr/share/applications/ARI-Server
+[Install]
+WantedBy=multi-user.target

@@ -152,6 +152,36 @@ void initConfig()
     Log("IP du serveur : " + ip_serveur);
     Log("Port de la base de données : " + base_port);
 }
+/**
+ * Batterie de tests histoire de voir si les différentes partie du code fonctionnent proprement
+ */
+void UnitTestings()
+{
+    Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
+    std::cout << std::endl;
+
+    Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
+    Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
+    std::cout << std::endl;
+    Log("[TEST] Plaque choisie pour le test : GD-144-QH");
+    Log("[TEST] Nom du fichier : 2.jpg");
+
+    std::string plaque = getPlaque("2.jpg");
+    std::string plaque2 = "GD-144-QH";
+
+    Log("[TEST] Texte detecté : " + plaque);
+    if (plaque.find(plaque2) != std::string::npos)
+    {
+        Log("[TEST] L'image test.jpg contient la plaque choisie pour les tests");
+        std::cout << std::endl;
+        LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
+        Log("[TEST] tout les tests sont passés !");
+    }
+    else
+    {
+        LogError("[TEST] L'image 3.jpg ne contient pas la plaque, il s'agit d'une erreur.");
+    }
+}
 
 int main()
 {
@@ -224,31 +254,7 @@ int main()
     char e;
 #if DEBUG_MODE
 
-    Log("[TEST] SÉRIES DE TESTS POUR LE LOGICIEL SERVEUR");
-    std::cout << std::endl;
-
-    Log("[TEST] Cette batterie de tests utilise une image pré-définie pour debug le programme.");
-    Log("[TEST] Si vous voyez ce message en production, mettez DEBUG_MODE sur 0");
-    std::cout << std::endl;
-    Log("[TEST] Plaque choisie pour le test : GD-144-QH");
-    Log("[TEST] Nom du fichier : 2.jpg");
-
-    std::string plaque = getPlaque("2.jpg");
-    std::string plaque2 = "GD-144-QH";
-
-    Log("[TEST] Texte detecté : " + plaque);
-    if (plaque.find(plaque2) != std::string::npos)
-    {
-        Log("[TEST] L'image test.jpg contient la plaque choisie pour les tests");
-        std::cout << std::endl;
-        LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
-        Log("[TEST] tout les tests sont passés !");
-    }
-    else
-    {
-        LogError("[TEST] L'image 3.jpg ne contient pas la plaque, il s'agit d'une erreur.");
-    }
-
+    UnitTestings();
     return 0;
 #endif
 
