@@ -260,8 +260,13 @@ Test en condition réelles (avec une caméra) : passent la majorité du temps (v
 ====== >Notes supplémentaires
 
 Pour que le code fonctionne, il faut que la plaque d'immatriculation forme un rectangle et qu'il n'y ai ni reflection ou que y'ai de la lumière trop intense près de la caméra
-Exemple d'image ne marchant pas :
-https://raw.githubusercontent.com/SomeBoringNerd/ProjectBlackMirror/main/ARI-Server-master/images/good_example_clean.png
+Exemple d'image d'une bonne image :
+
+image::https://pics.self-hosted.lol/i/img/t8Ds8v1r.png[bon exemple]
+
+image::https://pics.self-hosted.lol/i/img/oqy07FM5.png[bon exemple avec contours]
+
+
 === A faire : 
 
 > relier a la base de données
