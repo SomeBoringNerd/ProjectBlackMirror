@@ -56,24 +56,32 @@ std::string getProperName(std::string _plaque)
  * Detecte l'endroit où une plaque d'immatriculation peut exister
  * @param filename nom du fichier de l'image avec extention (path relatif)
  * @return le texte sur la plaque après passage dans <code>getProperName()</code>
+ * @note ce code est une traduction du script python trouvé ici : https://shorturl.at/afjJO (gamingdeputy.com)
  */
 std::string getPlaque(std::string filename)
 {
+    // lit l'image
     cv::Mat original_image = cv::imread(filename);
 
+    // copie de l'image en noir, blanc, gris
     cv::Mat gray_image;
     cvtColor(original_image, gray_image, cv::COLOR_BGR2GRAY);
 
+    // lit les contours de l'image
     cv::Mat edged_image;
     Canny(gray_image, edged_image, 30, 200);
 
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
+
+    // trouve les contours dans l'image, met les points dans contours, et l'ordre dans hierarchy
     findContours(edged_image.clone(), contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
     cv::Mat img1 = original_image.clone();
 
+    // dessine les contours sur une copie de l'image originale
     drawContours(img1, contours, -1, cv::Scalar(0, 255, 0), 3);
 
+    // trie les contours et garde seulement 30 éléments
     sort(contours.begin(), contours.end(), [](std::vector<cv::Point> a, std::vector<cv::Point> b)
          { return contourArea(a) > cv::contourArea(b); });
     contours.resize(30);
@@ -83,11 +91,15 @@ std::string getPlaque(std::string filename)
 
     drawContours(img2, contours, -1, cv::Scalar(0, 255, 0), 3);
 
+    // écrit l'image sur le disque
     cv::imwrite("contours.png", img2);
 
     int count = 0;
     int idx = 7;
     int i = 0;
+
+    // loop dans les points
+    // met les 4 points les plus susceptibles de ressembler a un rectangle a part puis crop l'image pour garder seulement notre supposée plaque
     for (std::vector<cv::Point> c : contours)
     {
         double contour_perimeter = arcLength(c, true);
@@ -105,7 +117,9 @@ std::string getPlaque(std::string filename)
         }
     }
 
-    // crash sans ça
+    // fixe un crash super stupide
+    // si screenCnt (vecteur de points) est vide, essayer de dessiner des contours en prenant screenCnt comme référence cause un crash.
+    // retourner un string vide si screenCnt l'est semble être une solution qui marche.
     if (screenCnt.empty())
     {
         return "";
@@ -115,6 +129,7 @@ std::string getPlaque(std::string filename)
         drawContours(original_image, std::vector<std::vector<cv::Point>>{screenCnt}, -1, cv::Scalar(0, 255, 0), 3);
     }
 
+    // partie Tesseract
     std::string cropped_License_Plate = filename + ".png";
     tesseract::TessBaseAPI tess;
     tess.Init(NULL, "fra", tesseract::OEM_LSTM_ONLY);

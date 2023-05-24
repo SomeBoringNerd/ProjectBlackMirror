@@ -36,6 +36,7 @@ void initDatabase()
  *
  * @param plaque le texte sur la plaque d'immatriculation au format AA-123-BB
  * @return 1 si la plaque existe.
+ * @todo : implémentation de la date limite, et d'autres mesures de sécurité
  */
 int fetchDatabase(std::string plaque)
 {

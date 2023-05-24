@@ -36,7 +36,9 @@
 
 *********************************************************************/
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
+#define ACTION_PING_CAMERA 1
+#define ACTION_GET_IMAGE_FROM_CAMERA 0
 
 // ip des deux caméras avec leur port
 std::string ips[2] = {"192.168.1.2", "192.168.0.4"};
@@ -63,7 +65,7 @@ void *loop(void *data)
         if (isClientLoggedIn)
         {
             // si la caméra est en ligne
-            respond[_ip] = execute(ips[_ip], 1);
+            respond[_ip] = execute(ips[_ip], ACTION_PING_CAMERA);
 
             if (!respond[_ip])
             {
@@ -80,7 +82,7 @@ void *loop(void *data)
                     Log("La caméra " + ips[_ip] + " est revenue en ligne");
                 }
 
-                if (!execute(ips[_ip], 0))
+                if (!execute(ips[_ip], ACTION_GET_IMAGE_FROM_CAMERA))
                 {
                     send("ERROR_COULDNT_GET_IMAGE");
                     LogError("Impossible de récuperer une image de " + ips[_ip] + "(hors ligne ?)");
@@ -204,45 +206,31 @@ int main()
 // système simple pour savoir si les cams sont en ligne
 #if !DEBUG_MODE
 
-    respond[0] = execute(ips[0], 1);
-    respond[1] = execute(ips[1], 1);
+    respond[0] = execute(ips[0], ACTION_PING_CAMERA);
+    respond[1] = execute(ips[1], ACTION_PING_CAMERA);
 
-    if (respond[0])
+    int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
+    if (t1)
     {
-        int t1 = pthread_create(&camUn, NULL, loop, (void *)0);
-        if (t1)
-        {
 
-            Log("thread 1 n'a pas pu être créé");
-            return 1;
-        }
-        else
-        {
-            Log("Le thread cam 1 a été créé");
-        }
+        Log("thread 1 n'a pas pu être créé");
+        return 1;
     }
     else
     {
-        Log("La caméra n'a pas répondu au ping");
+        Log("Le thread cam 1 a été créé");
     }
 
-    if (respond[1])
+    int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
+    if (t2)
     {
-        int t2 = pthread_create(&camDeux, NULL, loop, (void *)1);
-        if (t2)
-        {
 
-            Log("thread 2  n'a pas pu être créé");
-            return 1;
-        }
-        else
-        {
-            Log("Le thread cam 2 a été créé");
-        }
+        Log("thread 2  n'a pas pu être créé");
+        return 1;
     }
     else
     {
-        Log("La caméra n'a pas répondu au ping");
+        Log("Le thread cam 2 a été créé");
     }
 
     initWebSocket();
