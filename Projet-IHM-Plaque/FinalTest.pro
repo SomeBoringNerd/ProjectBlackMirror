@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql multimedia multimediawidgets
 LIBS += -L"C:\Qt\5.15.2\mingw81_32\lib" -llibmysql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

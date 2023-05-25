@@ -1,11 +1,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
-#include <QtSql>
-#include <QSqlDatabase>
-
 #include <QMainWindow>
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QtSql/QSqlDatabase>
+#include <QStandardItemModel>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,44 +25,59 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //QSqlDatabase db;
+    void on_viewfinder_customContextMenuRequested(const QPoint &pos);
+
 
 private slots:
+    void on_Ouvrir_clicked();
 
+    void on_Signaler_clicked();
 
+    void on_Admin_clicked();
 
-    void on_pushButton_Ouvrir_Menu_clicked(); //Bouton Ouvrir dans la page Menu
+    void on_Exit_clicked();
 
-    void on_pushButton_2_Ajouter_Menu_clicked(); // Bouton Ajouter dans la page Menu
+    void on_Camera_clicked();
 
-    void on_pushButton_Annuler_Ajouter_clicked(); // Bouton Annuler dans la page Ajouter
+    void on_Inscription_clicked();
 
-    void on_pushButton_3_Connexion_clicked(); // Bouton Connexion dans la page Connexion
+    void on_Menu_2_clicked();
 
-    void on_pushButton_Annuler_Connexion_clicked(); // Bouton Annuler dans la page Connexion
+    void on_Menu_clicked();
 
-    void on_pushButton_4_Signaler_Menu_clicked(); // Bouton Signaler dans la page Menu
+    void on_Deconnexion_clicked();
 
-    void on_pushButton_3_enregistrer_clicked(); // Bouton enregistrer dans la page Ajouter
+    void on_Ajouter_clicked();
 
-    void on_pushButton_Retour_Connexion_clicked(); // Bouton Retour dans la page Connexion
+    void on_Historique_clicked();
 
-    void on_pushButton_2_Inscription_Connexion_clicked(); //Bouton Inscription dans la page Connexion
+    void on_Retour_clicked();
 
-    void on_pushButton_2_Retour_Inscription_clicked();
+    void on_Retour_Inscription_clicked();
 
-    void on_pushButton_Ajouter_Admin_clicked();
+    void affichageDonneeUtilisateur();
 
-    void on_pushButton_Quitter_Menu_clicked();
+    void on_Sinscrire_clicked();
 
-    void on_pushButton_3_Inscrire_Inscription_clicked();
+    void on_Connexion_clicked();
 
-    void on_pushButton_3_Deconnexion_Admin_clicked();
+    void on_Menu_3_clicked();
 
+    void on_stackedWidget_currentChanged(int arg1);
 
+    void on_openGLWidget_aboutToCompose();
+
+    void on_actionCamera_2_toggled(bool arg1);
+
+    void on_actionCamera_3_toggled(bool arg1);
+
+    void on_actionMenu_principal_toggled(bool arg1);
 
 private:
     Ui::MainWindow *ui;
     QSqlDatabase database;
+    QCamera *camera;
+    QCameraViewfinder *viewfinder;
+    QStandardItemModel *modele;
 };
 #endif // MAINWINDOW_H
