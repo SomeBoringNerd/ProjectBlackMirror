@@ -1,4 +1,4 @@
-#define ALLOW_DATABASE 0
+#define ALLOW_DATABASE 1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #if ALLOW_DATABASE
-#include "include/mysql/jdbc.h"
+#include <sqlite3.h>
 #endif
 
 #include <string>
@@ -96,35 +96,27 @@ void *loop(void *data)
                     {
                         Log(plaque);
 #if ALLOW_DATABASE
-                        try
+                        if (fetchDatabase(plaque))
                         {
-                            if (fetchDatabase(plaque))
-                            {
-                                Log("La plaque existe");
-                                //@TODO : implémenter logique de communication
-                            }
-                            else
-                            {
-                                LogError("La plaque " + plaque + " n'existe pas dans la base de donnée");
-                            }
+                            Log("La plaque existe");
+                            //@TODO : implémenter logique de communication
                         }
-                        catch (sql::SQLException &e)
+                        else
                         {
-                            LogError("Problème de base de donnée");
-                            LogError("Erreur : (" + to_string(e.getErrorCode()) + ")\n" + e.what());
+                            LogError("La plaque " + plaque + " n'existe pas dans la base de donnée");
                         }
-#endif
                     }
+#endif
                 }
             }
+        }
 
-            old_response = respond[_ip];
+        old_response = respond[_ip];
 
-            if (!doit_exit)
-            {
-                Log("Un thread vient d'être supprimé");
-                pthread_exit(0);
-            }
+        if (!doit_exit)
+        {
+            Log("Un thread vient d'être supprimé");
+            pthread_exit(0);
         }
     }
     LogWarning("Un thread vient d'être supprimé");
@@ -171,13 +163,20 @@ void UnitTestings()
     std::string plaque = getPlaque("2.jpg");
     std::string plaque2 = "GD-144-QH";
 
-    Log("[TEST] Texte detecté : " + plaque);
+    Log("[TEST] Texte detecté : " + plaque + "|");
     if (plaque.find(plaque2) != std::string::npos)
     {
         Log("[TEST] L'image test.jpg contient la plaque choisie pour les tests");
         std::cout << std::endl;
-        LogError("[TEST] Le logiciel n'est pas encore capable de se connecter a la base de données");
-        Log("[TEST] tout les tests sont passés !");
+        if (fetchDatabase(plaque))
+        {
+            Log("[TEST] la plaque a été trouvée dans la base de données");
+            Log("[TEST] tout les tests sont passés !");
+        }
+        else
+        {
+            LogError("[TEST] La plaque n'a pas été trouvée dans la base de données");
+        }
     }
     else
     {

@@ -33,4 +33,4 @@ add_executable(ARI-Server
 
 # lie les librairies au lieu de les inclure, ça rend le code plus leger mais demande 
 # d'installer les headers sur la machine source
-target_link_libraries(ARI-Server ${OpenCV_LIBS} -lleptonica -ltesseract)
+target_link_libraries(ARI-Server ${OpenCV_LIBS} -lleptonica -ltesseract sqlite3)
