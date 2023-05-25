@@ -4,31 +4,46 @@
 #include <stdlib.h>
 
 #if ALLOW_DATABASE
-#include "jdbc/mysql_connection.h"
 
-#include "include/jdbc/cppconn/driver.h"
-#include "include/jdbc/cppconn/exception.h"
-#include "include/jdbc/cppconn/resultset.h"
-#include "include/jdbc/cppconn/statement.h"
-#include "include/jdbc/cppconn/prepared_statement.h"
+#include <sqlite3.h>
 
-#define HOST "192.168.1.3"
-#define USER "root"
-#define PASS ""
-#define DB "PlaqueSystem"
+sqlite3 *db;
+#include <algorithm>
 
-sql::Driver *driver;
-std::auto_ptr<sql::Connection> con(driver->connect(HOST, USER, PASS));
-std::auto_ptr<sql::Statement> stmt(con->createStatement());
+const std::string WHITESPACE = " \n\r\t\f\v";
 
-/**
- * Initialise la base de donnée
- */
+std::string ltrim(const std::string &s)
+{
+    size_t start = s.find_first_not_of(WHITESPACE);
+    return (start == std::string::npos) ? "" : s.substr(start);
+}
+
+std::string rtrim(const std::string &s)
+{
+    size_t end = s.find_last_not_of(WHITESPACE);
+    return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
+
+std::string trim(const std::string &s)
+{
+    return rtrim(ltrim(s));
+}
+
 void initDatabase()
 {
-    driver = get_driver_instance();
 
-    con->setSchema(DB);
+    // ouvre la db
+    int rc;
+    rc = sqlite3_open("BlackMirror", &db);
+
+    std::string sql = "CREATE TABLE IF NOT EXISTS CLIENT (NAME TEXT NOT NULL, PLAQUE TEXT NOT NULL);";
+    char *feedback;
+
+    // execute la request a la recherche d'erreur
+    if (!sqlite3_exec(db, sql.c_str(), 0, 0, &feedback) == SQLITE_OK)
+    {
+        LogError("La base de données n'a pas pu être créée");
+    }
 }
 
 /**
@@ -40,19 +55,8 @@ void initDatabase()
  */
 int fetchDatabase(std::string plaque)
 {
-    int e = 0;
-    stmt->execute("SELECT * FROM Utilisateurs WHERE Plaque=\"" + plaque + "\";");
-
-    std::auto_ptr<sql::ResultSet> res;
-    do
-    {
-        res.reset(stmt->getResultSet());
-        while (res->next())
-        {
-            e++;
-        }
-    } while (stmt->getMoreResults());
-
-    return e >= 1;
+    std::string request = "SELECT * FROM CLIENT WHERE PLAQUE='" + trim(plaque) + "';";
+    char *feedback_reg;
+    return sqlite3_exec(db, request.c_str(), 0, 0, &feedback_reg) == SQLITE_OK;
 }
 #endif
