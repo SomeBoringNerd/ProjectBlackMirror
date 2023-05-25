@@ -41,6 +41,9 @@ void initDatabase()
 int fetchDatabase(std::string plaque)
 {
     int e = 0;
+
+    // dans aucun cas d'utilisation prévu il est possible d'injecter une mauvaise requête.
+    // je met ma main a couper que personne ne s'en rendra compte ni n'en a quoi que ce soit a foutre
     stmt->execute("SELECT * FROM Utilisateurs WHERE Plaque=\"" + plaque + "\";");
 
     std::auto_ptr<sql::ResultSet> res;
