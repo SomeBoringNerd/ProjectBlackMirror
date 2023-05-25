@@ -3,7 +3,7 @@
 #include "QMessageBox"
 #include <QSqlquery>
 #include <QLabel>
-#include <Qstring>
+#include <QString>
 #include <QDialogButtonBox>
 #include <QSqlDatabase>
 #include <QComboBox>
@@ -17,7 +17,6 @@
 #include <QtMultimedia/QMediaContent>
 #include <QCamera>
 #include <QCameraViewfinder>
-#include <QCameraImageCapture>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDebug>
@@ -50,25 +49,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QWidget  *widget = new QWidget ;
     QVBoxLayout *layout = new QVBoxLayout;
     setCentralWidget(widget);
-/*
-    QMediaPlayer mediaPlayer;
-    mediaPlayer.setVideoOutput(widget);
+
+    //QMediaPlayer mediaPlayer;
+   // mediaPlayer.setVideoOutput();      //setVideoOutput(widget);
      //mediaPlayer.setMedia(QUrl("rtsp://192.168.1.2:554"));
-*/
+
     QCameraViewfinder *viewfinder = new QCameraViewfinder;
-    viewfinder->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+   // viewfinder->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     viewfinder->setMinimumSize(260, 180);
     camera->setViewfinder(viewfinder);
 
     camera->start();
+
 
     layout->addWidget(viewfinder);
     widget->setLayout(layout);
 
     ui->setupUi(this);
 
-    ui->stackedWidget->insertWidget(1, widget);
     ui->stackedWidget->setCurrentIndex(1);
+    //ui->stackedWidget->insertWidget(1, widget);
+
 }
 
 MainWindow::~MainWindow()
@@ -91,7 +92,7 @@ void MainWindow::on_Signaler_clicked()
 
 void MainWindow::on_Admin_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(2);
+     ui->stackedWidget->setCurrentIndex(1);
 
 }
 
