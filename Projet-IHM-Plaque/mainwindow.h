@@ -73,6 +73,8 @@ private slots:
 
     void on_actionMenu_principal_toggled(bool arg1);
 
+    void on_Enregistrer_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase database;

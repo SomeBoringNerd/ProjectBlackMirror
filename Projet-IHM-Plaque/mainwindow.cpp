@@ -249,14 +249,14 @@ void MainWindow::on_Deconnexion_clicked()
 
 void MainWindow::on_Historique_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(6);
+     ui->stackedWidget->setCurrentIndex(5);
 }
 
 
 
 void MainWindow::on_Retour_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(4);
+     ui->stackedWidget->setCurrentIndex(3);
 }
 
 
@@ -318,5 +318,68 @@ void MainWindow::on_actionCamera_3_toggled(bool arg1)
 void MainWindow::on_actionMenu_principal_toggled(bool arg1)
 {
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow::on_Enregistrer_clicked()
+{
+    if (db.open())
+        {
+            // Récupérer les données des champs d'entrée
+            QString Prenom = ui->Prenom_Ajouter->text();
+            QString Nom = ui->Nom_Ajouter->text();
+            QString Profession = ui->Profession_Ajouter->currentText();
+            //QDate Date_Debut = ui->Date_Debut->date();
+            QDate DateLimite = ui->dateTime2_Ajouter->date();
+            QString Plaque_Immatriculation = ui->Plaque_Immatriculation->text();
+
+            // Exécutez notre requête d'insertion
+
+            QSqlQuery qry;
+
+            qry.prepare("INSERT INTO Utilisateur( Prenom, Nom, Profession, DateLimite, Plaque_Immatriculation)  VALUES(:Prenom, :Nom, :Profession, :DateLimite, :Plaque_Immatriculation )");
+
+            // lier la valeur
+
+            qry.bindValue(":Prenom", Prenom);
+            qry.bindValue(":Nom", Nom);
+            qry.bindValue(":Profession", Profession);
+            //qry.bindValue(":Date_Debut", Date_Debut);
+            qry.bindValue(":DateLimite", DateLimite);
+            qry.bindValue(":Plaque_Immatriculation", Plaque_Immatriculation);
+            /*
+
+                    qry.prepare(QString("SELECT * FROM personnel WHERE Plaque_Immatriculation = :Plaque_Immatriculation"));
+
+                    qry.bindValue(":Plaque_Immatriculation", Plaque_Immatriculation);
+
+                     QString nPlaque_Immatriculation = qry.value(7).toString();
+
+            */
+
+            if (!(Prenom == "" || Nom == "" || Profession == "" || Plaque_Immatriculation == ""))
+            {
+                if (qry.exec())
+                {
+                    QMessageBox::information(this, "Ajouter", "Un nouveau visiteur a bien été enregistré");
+                    ui->stackedWidget->setCurrentIndex(3);
+                }
+                else
+                {
+                    QMessageBox::information(this, "Echec", "Une erreur est survenue");
+                }
+            }
+
+            else
+            {
+
+                QMessageBox::information(this, "Non insérée", "Les données existent déja");
+            }
+        }
+        else
+        {
+
+            QMessageBox::information(this, "base de donnée", "La base de donnée n'est pas connecté");
+        }
 }
 
