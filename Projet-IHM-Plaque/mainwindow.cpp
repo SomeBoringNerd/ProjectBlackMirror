@@ -252,7 +252,7 @@ void MainWindow::on_Historique_clicked()
      ui->stackedWidget->setCurrentIndex(5);
 }
 
-
+// ######################### Bouton de la Partie MENU ADMIN ####################################
 
 void MainWindow::on_Retour_clicked()
 {
