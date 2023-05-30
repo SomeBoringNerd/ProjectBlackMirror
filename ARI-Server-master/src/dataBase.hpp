@@ -50,7 +50,7 @@ void initDatabase()
  * Regarde dans la base de donnée si cette plaque existe.
  *
  * @param plaque le texte sur la plaque d'immatriculation au format AA-123-BB
- * @return 1 si la plaque existe.
+ * @return techniquement, cette requête retourne 0 (SQLITE_OK) si elle réussit
  * @todo : implémentation de la date limite, et d'autres mesures de sécurité
  */
 int fetchDatabase(std::string plaque)

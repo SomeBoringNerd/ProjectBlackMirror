@@ -92,7 +92,7 @@ void *loop(void *data)
                 {
                     std::string plaque = getPlaque(ips[_ip] + ".jpg");
 
-                    if (regex_match(plaque, std::regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
+                    if (regex_match(plaque, std::regex("\p{Lu}{2}-\d{3}-\p{Lu}{2}")))
                     {
                         Log(plaque);
 #if ALLOW_DATABASE
