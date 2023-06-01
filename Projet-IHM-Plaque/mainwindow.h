@@ -61,19 +61,23 @@ private slots:
 
     void on_Connexion_clicked();
 
-    void on_Menu_3_clicked();
+    //void on_Menu_3_clicked();
 
-    void on_stackedWidget_currentChanged(int arg1);
+    //void on_stackedWidget_currentChanged(int arg1);
 
-    void on_openGLWidget_aboutToCompose();
+    //void on_openGLWidget_aboutToCompose();
 
-    void on_actionCamera_2_toggled(bool arg1);
+    //void on_actionCamera_2_toggled(bool arg1);
 
-    void on_actionCamera_3_toggled(bool arg1);
+    //void on_actionCamera_3_toggled(bool arg1);
 
     void on_actionMenu_principal_toggled(bool arg1);
 
     void on_Enregistrer_clicked();
+
+    void on_actionCamera2_triggered();
+
+    void on_actionMenu_principal_triggered();
 
 private:
     Ui::MainWindow *ui;

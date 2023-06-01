@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->setupUi(this);
 
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
     //ui->stackedWidget->insertWidget(1, widget);
 
 }
@@ -109,7 +109,7 @@ void MainWindow::on_Exit_clicked()
 
 void MainWindow::on_Camera_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
 // ######################### Bouton de la Partie CONNEXION ####################################
@@ -297,22 +297,23 @@ void MainWindow::affichageDonneeUtilisateur()
 }
 
 
-void MainWindow::on_Menu_3_clicked()
+void MainWindow::on_actionCamera2_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+void MainWindow::on_actionMenu_principal_triggered()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
 
 
-void MainWindow::on_actionCamera_2_toggled(bool arg1)
+
+/*void MainWindow::on_actionCamera_3_toggled(bool arg1)
 {
     ui->stackedWidget->setCurrentIndex(2);
-}
-
-
-void MainWindow::on_actionCamera_3_toggled(bool arg1)
-{
-    ui->stackedWidget->setCurrentIndex(2);
-}
+} */
 
 
 void MainWindow::on_actionMenu_principal_toggled(bool arg1)
@@ -382,4 +383,6 @@ void MainWindow::on_Enregistrer_clicked()
             QMessageBox::information(this, "base de donnée", "La base de donnée n'est pas connecté");
         }
 }
+
+
 

@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label">
@@ -689,8 +689,8 @@
      <property name="title">
       <string>Cameras</string>
      </property>
-     <addaction name="actionCamera_2"/>
-     <addaction name="actionCamera_3"/>
+     <addaction name="actionCamera2"/>
+     <addaction name="actionCamera3"/>
     </widget>
     <addaction name="menuCameras"/>
     <addaction name="actionMenu_principal"/>
@@ -698,12 +698,12 @@
    <addaction name="menuInterface_Graphique_Portail"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionCamera_2">
+  <action name="actionCamera2">
    <property name="text">
     <string>Camera 1</string>
    </property>
   </action>
-  <action name="actionCamera_3">
+  <action name="actionCamera3">
    <property name="text">
     <string>Camera 2</string>
    </property>
