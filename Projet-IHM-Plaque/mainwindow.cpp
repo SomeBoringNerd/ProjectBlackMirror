@@ -1,48 +1,74 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "logger.h"
 #include "QMessageBox"
-#include <qsqlquery>
+#include <QSqlquery>
 #include <QLabel>
 #include <Qstring>
 #include <QDialogButtonBox>
 #include <QSqlDatabase>
-#include<QtDebug>
+#include <QComboBox>
+#include <QSql>
+#include <QDate>
+#include <QStringList>
+#include <QStandardItemModel>
+#include <QCameraInfo>
+#include <QtWidgets/QApplication>
+#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimedia/QMediaContent>
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QCameraImageCapture>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QDebug>
+#include <QApplication>
+#include <QMediaPlayer>
+#include <QVideoWidget>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+QSqlDatabase db;
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+
+    db = QSqlDatabase::addDatabase("QMYSQL", "MyConnect");
+    db.setHostName("192.168.1.3");
+    db.setPort(3306);
+    db.setUserName("root");
+    db.setPassword("");
+    db.setDatabaseName("plaqueihm2.0");
+
+    // PlaceHolder pour les différentes espaces d'écritures
+   /* ui->Nom_Ajouter->setPlaceholderText("Nom");
+    ui->Prenom_Ajouter->setPlaceholderText("Prénom");
+    ui->Plaque_Immatriculation->setPlaceholderText("XX-000-XX");
+    ui->Nom_User_Insctiption->setPlaceholderText("Nom d'utilisateur");
+    ui->Password_Inscription->setPlaceholderText("Mot de passe");
+    ui->Nom_User_Connexion->setPlaceholderText("Nom d'utilisateur");
+    ui->Password_Connexion->setPlaceholderText("Mot de passe");*/
+
+    camera = new QCamera;
+    QWidget  *widget = new QWidget ;
+    QVBoxLayout *layout = new QVBoxLayout;
+    setCentralWidget(widget);
+/*
+    QMediaPlayer mediaPlayer;
+    mediaPlayer.setVideoOutput(widget);
+     //mediaPlayer.setMedia(QUrl("rtsp://192.168.1.2:554"));
+*/
+    QCameraViewfinder *viewfinder = new QCameraViewfinder;
+    viewfinder->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    viewfinder->setMinimumSize(260, 180);
+    camera->setViewfinder(viewfinder);
+
+    camera->start();
+
+    layout->addWidget(viewfinder);
+    widget->setLayout(layout);
+
     ui->setupUi(this);
-    setWindowTitle("Interface agent d'accueil");
 
-    //Placeholder text
-
-    ui->lineEdit_2_Non_Ajouter->setPlaceholderText("Nom");
-    ui->lineEdit_Prenom_Ajouter->setPlaceholderText("Prénom");
-    ui->lineEdit_Plaque_Ajouter->setPlaceholderText("Plaque");
-
-    // Placeholder pour la partie Connexion et Inscription
-    ui->lineEdit_2_Non_User_Connexion->setPlaceholderText("Nom d'utilisateur");
-    ui->lineEdit_2_Password_Connexion->setPlaceholderText("Mot de passe");
-    ui->lineEdit_Nom_User_Inscription->setPlaceholderText("Nom d'utilisateur");
-    ui->lineEdit_2_Password_Inscription->setPlaceholderText("Mot de passe");
-
-    //Clear Button Enable(icon) apres avoir ecrit dans les page Ajouter, Connexion et Inscription
-     ui->lineEdit_2_Non_Ajouter->setClearButtonEnabled(true);
-     ui->lineEdit_Prenom_Ajouter->setClearButtonEnabled(true);
-     ui->lineEdit_Plaque_Ajouter->setClearButtonEnabled(true);
-     ui->lineEdit_Nom_User_Inscription->setClearButtonEnabled(true);
-     ui->lineEdit_2_Password_Inscription->setClearButtonEnabled(true);
-     ui->lineEdit_2_Non_User_Connexion->setClearButtonEnabled(true);
-     ui->lineEdit_2_Password_Connexion->setClearButtonEnabled(true);
-
-     //Clear button qui efface à la suite de chaque caractère
-
-     ui->lineEdit_2_Password_Connexion->setClearButtonEnabled(true);
-     ui->lineEdit_2_Password_Inscription->setClearButtonEnabled(true);
-
-
+    ui->stackedWidget->insertWidget(6, widget);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
@@ -50,194 +76,239 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// ######################### Bouton de la Partie MENU PRINCIPALE ####################################
 
-
-/*Présentation des différente pages :
- * Page 0 : Menu d'accueil pour l'agent d'accueil
- * Page 1 : page "Ajouter" pour la partie Admin
- * Page 2 : Page "Connexion" pour la partie Admin
- * Page 3 : Page "Inscription" pour la partie Admin
- * Page 4 : Menu d'accueil pour la partie Admin
-   Page 5 : Page Historique pour pouvoir revoir les dernière enregistrement de l'administrateur/ */
-
-
-// void MainWindow::on_textEdit_nom_ajouter_copyAvailable(bool b)
-//{
-
-//}
-
-// ###########    Connecting To SQLite Database
-
-// ##################### Partie MENU PRINCIPALE ####################
-
-void MainWindow::on_pushButton_Ouvrir_Menu_clicked() // Le bouton Ouvir du menu est appuyé, envoie un message de confirmation à l'utilisateur
+void MainWindow::on_Ouvrir_clicked()
 {
-    QMessageBox::information(this,"message","le portail est bien ouvert");
+    QMessageBox::information(this, "Ouverture", "le portail est bien ouvert");
 }
 
-void MainWindow::on_pushButton_2_Ajouter_Menu_clicked() // Bouton Ajouter qui est relier à la page Ajouter
+void MainWindow::on_Signaler_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(2);
+    QMessageBox::information(this, "Alerte", "Alerte Intrusion !!");
 }
 
-void MainWindow::on_pushButton_4_Signaler_Menu_clicked() // Bouton Signaler cliqué, envoie un message d'intrusion à l'utilisateur
+
+void MainWindow::on_Admin_clicked()
 {
-    QMessageBox::information(this,"message","Alerte Intrusion !!");
+     ui->stackedWidget->setCurrentIndex(1);
+
 }
 
-void MainWindow::on_pushButton_Quitter_Menu_clicked() // Bouton Quitter cliqué, renvoie une condition. Si l'utilisateur met YES, ferme le logiciel
+
+void MainWindow::on_Exit_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Creer un Compte", "Vous etes sur de vouloir fermer l'application?", QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes)
+    reply = QMessageBox::question(this, "Arrêt du logiciel", "Vous êtes sur de vouloir fermer l'application?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
     {
         QApplication::quit();
     }
 }
 
-// ######################## Partie INSCRIPTION #############################
-
-void MainWindow::on_pushButton_2_Retour_Inscription_clicked() // Bouton Inscription cliqué, renvoie à la page de menu
+void MainWindow::on_Camera_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
-void MainWindow::on_pushButton_3_Inscrire_Inscription_clicked() // Bouton Inscription cliqué, inscrit utilisateur + ramène à la oage Connexion
-{
+// ######################### Bouton de la Partie CONNEXION ####################################
 
-     // Connexion à la base de donnée quand les informations de la partie Inscription, Connexion et Ajouter seront rentrés
-      QSqlDatabase db  = QSqlDatabase::addDatabase("QMYSQL");
-     database.setHostName("127.0.0.1");
-     database.setPort(3306);
-     database.setUserName("root");
-     database.setPassword("");
-     database.setDatabaseName("plaque");
-    // bool ok = db.open();
-
-     if(database.open())
-     {
-         // Récupérer les données des champs d'entrée
-         QString User = ui->lineEdit_Nom_User_Inscription->text();
-         QString Password = ui->lineEdit_2_Password_Inscription->text();
-
-
-         // Exécutez notre requête d'insertion
-
-         QSqlQuery qry;
-
-         qry.prepare("INSERT INTO administrateur( User, Password)  VALUES(:User, :Password )");
-
-
-
-         // lier la valeur
-
-         qry.bindValue(":User", User);
-         qry.bindValue(":Password", Password);
-
-
-         if (!(User == "" ||  Password == "" ))
-         {
-             qry.exec();
-
-             QMessageBox::information(this,"Inscription","Un nouvel administrateur est inscrit");
-              ui->stackedWidget->setCurrentIndex(2);
-
-
-
-         }
-
-         else {
-
-             QMessageBox::information(this, "Pas insérés", "Les donnée existent déja");
-
-
-         }
-
-
-     }
-     else {
-
-         QMessageBox::information(this, "Base de donnée", "La base de donnée n'est pas connecté");
-         // QSqlDatabase::lastError();
-     }
-
- }
-
-
-
-// #################### Partie CONNEXION ####################################
-
-void MainWindow::on_pushButton_Retour_Connexion_clicked() //Bouton retour cliqué, retourne à la page d'accueil
-{
-    ui->stackedWidget->setCurrentIndex(0);
-}
-
-
-void MainWindow::on_pushButton_3_Connexion_clicked() //Bouton de la page Connexion cliqué, ramène l'utilisateur à la page Ajouter
-{
-    ui->stackedWidget->setCurrentIndex(4);
-}
-
-void MainWindow::on_pushButton_2_Inscription_Connexion_clicked() // Bouton Inscription cliqué, revoie vers la page Inscription
+void MainWindow::on_Inscription_clicked()
 {
     ui->stackedWidget->setCurrentIndex(3);
 }
 
+void MainWindow::on_Menu_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
 
-// #################### Partie ADMIN ########################################
+void MainWindow::on_Connexion_clicked()
+{
+    QString Nom_User = ui->Nom_User_Connexion->text();
+    QString _Password = ui->Password_Connexion->text();
 
-void MainWindow::on_pushButton_Ajouter_Admin_clicked() //Bouton Ajouter cliqué, renvoie à la page Ajouter
+    if (db.open())
+    {
+        // Creating My quereis
+        // QMessageBox::information(this, "Database Success", "Database Connection Success");
+        QSqlQuery query(QSqlDatabase::database("MyConnect"));
+
+        query.prepare(QString("SELECT * FROM administrateur WHERE Nom_User = :Nom_User"));
+
+        query.bindValue(":Nom_User", Nom_User);
+
+        if (!query.exec())
+        {
+            QMessageBox::information(this, "Failed", "Query Failed to Execute");
+        }
+        else
+        {
+            while (query.next())
+            {
+                QString User = query.value(0).toString();
+                QString Password = query.value(1).toString();
+
+                if (_Password == Password)
+                {
+                    QMessageBox::information(this, "Réussi", "Réussite de l’ouverture de session");
+
+                    ui->stackedWidget->setCurrentIndex(3);
+                }
+                else
+                {
+                    QMessageBox::information(this, "Mot de passe incorrect", "Échec d’ouverture de session");
+                }
+            }
+        }
+    }
+    else
+    {
+
+        QMessageBox::information(this, "Échec de la base de données", "Échec de la connexion à la base de données");
+    }
+}
+
+
+// ######################### Bouton de la Partie INSCRIPTION ####################################
+
+void MainWindow::on_Menu_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_Retour_Inscription_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
 
-void MainWindow::on_pushButton_3_Deconnexion_Admin_clicked() // Boutton Déconnexion cliqué, renvoie une condition. Si l'utilisateur met YES, le ramène à l'accueil
+
+void MainWindow::on_Sinscrire_clicked()
 {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Déconnexion", "Etes vous sur de vouloir vous déconnecter?", QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes)
+    if (db.open())
     {
-        ui->stackedWidget->setCurrentIndex(0);
-        QMessageBox::information(this,"Déconnexion","La déconnexion a bien été effectué");
+        // Récupérer les données des champs d'entrée
+        QString Nom_User = ui->Nom_User_Inscription->text();
+        QString Password = ui->Password_Inscription->text();
+
+        QSqlQuery qry;
+
+        qry.prepare("INSERT INTO administrateur( Nom_User, Password)  VALUES(:Nom_User, :Password )");
+
+        qry.bindValue(":Nom_User", Nom_User);
+        qry.bindValue(":Password", Password);
+
+        if (!(Nom_User == "" || Password == ""))
+        {
+            if (qry.exec())
+            {
+                QMessageBox::information(this, "Inscription", "Un nouvel administrateur a bien été inscrit");
+                ui->stackedWidget->setCurrentIndex(1);
+            }
+            else
+            {
+                QMessageBox::information(this, "échec", "Une erreur est survenue");
+            }
+        }
+
+        else
+        {
+
+            QMessageBox::information(this, "Non insérée", "Les données existent déja");
+        }
+    }
+    else
+    {
+
+        QMessageBox::information(this, "Base de donnée", "La base de donnée n'est pas connecté");
     }
 }
 
 
+// ######################### Bouton de la Partie MENU ADMIN ####################################
 
-void MainWindow::on_pushButton_Annuler_Ajouter_clicked() // Si le bouton annuler de la page Ajouter est cliqué, efface tout
+void MainWindow::on_Ajouter_clicked()
 {
-     ui->lineEdit_2_Non_Ajouter->setText("");
-     ui->lineEdit_Prenom_Ajouter->setText("");
-     ui->lineEdit_Plaque_Ajouter->setText("");
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_Deconnexion_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Déconnexion", "Vous etes sur de vouloir vous déconnecter ?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+        QMessageBox::information(this, "Déconnexion", "La déconnexion de votre conte a bien été effectué");
+    }
+}
+
+
+void MainWindow::on_Historique_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(6);
+}
+
+
+
+void MainWindow::on_Retour_clicked()
+{
      ui->stackedWidget->setCurrentIndex(4);
 }
 
 
-
-// ###################### Partie AJOUTER NOUVEAU VISITEURS ####################
-
-void MainWindow::on_pushButton_3_enregistrer_clicked() // Bouton Enregistrer cliqué, renvoie un message confirmant l'enregistrement
+void MainWindow::affichageDonneeUtilisateur()
 {
-    QMessageBox::information(this,"enregistrer","L'enregistrement a bien été effectué");
-    ui->stackedWidget->setCurrentIndex(4);
+    QSqlQuery requete;
+    int ligne(0);
+
+    requete.exec("SELECT * FROM personnel where Profession = Autre Visiteurs");
+
+    while (requete.exec())
+    {
+        ligne=requete.value(0).toInt();
+
+    }
+
+    modele = new QStandardItemModel(ligne, 6);
+
+    requete.exec("SELECT Prenom, Nom, Profession, Date_Debut, Date_Fin, Plaque_Immatriculation FROM personnel ");
+
+    while (requete.next())
+    {
+        for(int j=0; j<6; j++)
+        {
+            QStandardItem *item=new QStandardItem(requete.value(j).toString());
+            modele->setItem(ligne, j, item);
+        }
+    }
+
+    modele->setHeaderData(0, Qt::Horizontal, "Prenom" );
+    modele->setHeaderData(1, Qt::Horizontal, "Nom" );
+    modele->setHeaderData(2, Qt::Horizontal, "Profession" );
+    modele->setHeaderData(3, Qt::Horizontal, "Date_Debut" );
+    modele->setHeaderData(4, Qt::Horizontal, "Date_Fin" );
+    modele->setHeaderData(5, Qt::Horizontal, "Plaque_Immatriculation" );
+
+    ui->tableView->setModel(modele);
+}
+
+void MainWindow::on_actionCamera_2_toggled(bool arg1)
+{
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 
-void MainWindow::on_pushButton_Annuler_Connexion_clicked() // Bouton Annuler cliqué, efface tout dans la page Connexion
+void MainWindow::on_actionCamera_3_toggled(bool arg1)
 {
-    ui->lineEdit_2_Non_User_Connexion->setText("");
-    ui->lineEdit_2_Password_Connexion->setText("");
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 
-
-
-
-
-
-
-
-
-
+void MainWindow::on_actionMenu_principal_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
 
