@@ -36,7 +36,7 @@
 
 *********************************************************************/
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 #define ACTION_PING_CAMERA 1
 #define ACTION_GET_IMAGE_FROM_CAMERA 0
 
@@ -49,6 +49,8 @@ pthread_t camUn, camDeux, exit_listener;
 int doit_exit = 1;
 
 int respond[2] = {0, 0};
+int ready[2] = {0, 0};
+unsigned int iLoop[2] = {0, 0};
 /**
  * ping la caméra-ip a l'adresse donnée et fetch la dernière image disponible.
  * Celle-ci est sauvegardée dans le dossier d'éxecution
@@ -60,10 +62,15 @@ void *loop(void *data)
 {
     int _ip = (intptr_t)data;
     int old_response = 0;
+    ready[_ip] = 1;
+
     while (doit_exit)
     {
-        if (isClientLoggedIn)
+        // système basique pour eviter que les caméra soient desync
+        // on regarde si les deux caméras sont prêtes a fonctionner de nouveau
+        if (ready[_ip ? 0 : 1])
         {
+            ready[_ip] = 0;
             // si la caméra est en ligne
             respond[_ip] = execute(ips[_ip], ACTION_PING_CAMERA);
 
@@ -86,39 +93,45 @@ void *loop(void *data)
                 {
                     send("ERROR_COULDNT_GET_IMAGE");
                     LogError("Impossible de récuperer une image de " + ips[_ip] + "(hors ligne ?)");
-                    break;
                 }
                 else
                 {
                     std::string plaque = getPlaque(ips[_ip] + ".jpg");
 
+<<<<<<< Updated upstream
                     if (regex_match(plaque, std::regex("\p{Lu}{2}-\d{3}-\p{Lu}{2}")))
+=======
+                    if (regex_match(trim(plaque), std::regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
+>>>>>>> Stashed changes
                     {
                         Log(plaque);
 #if ALLOW_DATABASE
                         if (fetchDatabase(plaque))
                         {
-                            Log("La plaque existe");
-                            //@TODO : implémenter logique de communication
+                            Log("La plaque existe sur cam " + std::to_string(_ip));
                         }
                         else
                         {
-                            LogError("La plaque " + plaque + " n'existe pas dans la base de donnée");
+                            LogError("La plaque " + plaque + " n'existe pas dans la base de donnée (cam" + std::to_string(_ip) + ")");
                         }
                     }
 #endif
                 }
             }
-        }
 
-        old_response = respond[_ip];
+            old_response = respond[_ip];
+            iLoop[_ip]++;
 
-        if (!doit_exit)
-        {
-            Log("Un thread vient d'être supprimé");
-            pthread_exit(0);
+            if (!doit_exit)
+            {
+                Log("Un thread vient d'être supprimé");
+                pthread_exit(0);
+            }
+            ready[_ip] = 1;
         }
     }
+
+    // A aucun moment le thread est sensé être supprimé
     LogWarning("Un thread vient d'être supprimé");
     return 0;
 }

@@ -74,11 +74,6 @@ void onmessage(ws_cli_conn_t *_client, const unsigned char *msg, uint64_t msg_si
 
     if (cli != con_ip)
         return;
-
-    /*if(msg == "test_comm")
-    {
-        Log("Message reçu du client");
-    }*/
 }
 /**
  * @brief Wrapper de la fonction ws_sendframe_txt avec un check pour savoir si le client est connecté

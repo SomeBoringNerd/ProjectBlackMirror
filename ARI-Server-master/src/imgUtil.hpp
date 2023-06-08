@@ -78,6 +78,8 @@ std::string getPlaque(std::string filename)
     findContours(edged_image.clone(), contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
     cv::Mat img1 = original_image.clone();
 
+    cv::imwrite("edge" + filename + ".png", edged_image);
+
     // dessine les contours sur une copie de l'image originale
     drawContours(img1, contours, -1, cv::Scalar(0, 255, 0), 3);
 
@@ -92,14 +94,15 @@ std::string getPlaque(std::string filename)
     drawContours(img2, contours, -1, cv::Scalar(0, 255, 0), 3);
 
     // écrit l'image sur le disque
-    cv::imwrite("contours.png", img2);
+    cv::imwrite("contours" + filename + ".png", img2);
 
     int count = 0;
     int idx = 7;
     int i = 0;
 
     // loop dans les points
-    // met les 4 points les plus susceptibles de ressembler a un rectangle a part puis crop l'image pour garder seulement notre supposée plaque
+    // met les 4 points les plus susceptibles de ressembler a un rectangle a part
+    // puis crop l'image pour garder seulement notre supposée plaque
     for (std::vector<cv::Point> c : contours)
     {
         double contour_perimeter = arcLength(c, true);
