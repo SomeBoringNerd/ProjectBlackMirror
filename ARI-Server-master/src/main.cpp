@@ -98,11 +98,7 @@ void *loop(void *data)
                 {
                     std::string plaque = getPlaque(ips[_ip] + ".jpg");
 
-<<<<<<< Updated upstream
                     if (regex_match(plaque, std::regex("\p{Lu}{2}-\d{3}-\p{Lu}{2}")))
-=======
-                    if (regex_match(trim(plaque), std::regex("[A-Z][A-Z]-[0-9][0-9][0-9]-[A-Z][A-Z]")))
->>>>>>> Stashed changes
                     {
                         Log(plaque);
 #if ALLOW_DATABASE
