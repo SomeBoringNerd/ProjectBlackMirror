@@ -1,3 +1,5 @@
+Déprécié, nous ne nous en somme pas servi.
+
 === Serveur_Config
 
 Fichiers de config pour notre serveur sous NixOS.

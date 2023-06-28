@@ -2,7 +2,7 @@
 
 Ce logiciel sert a gérer la partie serveur du projet.
 
-Il connecte l'IA, la base de donnée, le client et les micro-controllers divers (Arduino, RaspBerry PI).
+Il connecte le système de reconnaissance de texte, la base de données, le client et les micro-controllers divers (Arduino, RaspBerry PI).
 
 Choix du langage : C++ car Tesseract-OCR et OpenCV ne supportent pas/plus le C.
 
@@ -268,9 +268,3 @@ image::https://pics.self-hosted.lol/i/img/t8Ds8v1r.png[bon exemple]
 
 image::https://pics.self-hosted.lol/i/img/oqy07FM5.png[bon exemple avec contours]
 
-
-=== A faire : 
-
-> relier a la base de données
-
-> système de websockets a finir

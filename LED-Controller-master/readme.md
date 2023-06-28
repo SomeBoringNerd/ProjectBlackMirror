@@ -1,4 +1,4 @@
-#Code Arduino pour la barrière 
+# Code Arduino pour la barrière 
 
 Ce code est destiné à être exécuté sur un microcontrôleur compatible avec la bibliothèque Arduino, utilisant un module WiFi, comme l'ESP32, pour créer un serveur web basé sur le protocole HTTP. Voici une explication détaillée de ce que fait ce code :
 

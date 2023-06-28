@@ -53,6 +53,3 @@ Répartition des taches :
 
 |===
 
-== A faire sur le repo : 
-
-ajouter la config Nix-OS
