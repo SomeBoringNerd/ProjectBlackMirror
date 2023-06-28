@@ -1,3 +1,5 @@
+= https://gitlab.com/SomeBoringNerd/project-black-mirror[if you dont speak / understand french, please click here to have a translated repo on my gitlab]
+
 = Project BlackMirror
 
 Project BlackMirror est un système d'automatisation d'ouverture d'une barrière grâce a la plaque d'immatriculation d'un véhicule. Le projet a été fait dans le cadre des projets des classes de Terminale BTS SNIR, session 2022 -> 2023
