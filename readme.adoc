@@ -21,11 +21,11 @@ Ce repos contient le code source des programmes suivants :
 
 | Projet-IHM-Plaque
 | Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
-| Son GoK4RiO#7224 
+| songok4rio (discord.gg)
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
-| Hergo (twitch.tv/Hergo)
+| Hergo (https://twitch.tv/hergooooo)
 
 | wsServer / ToyWS
 | Librairie pour créer des connexions websocket entre un serveur et client que nous avons forké pour nos besoins.
