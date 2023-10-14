@@ -17,19 +17,19 @@ Ce repos contient le code source des programmes suivants :
 
 | ARI-Server
 | Logiciel en C permettant au serveur et client de communiquer ensemble, et de reconnaitre du texte
-| SomeBoringNerd (contact : someboringnerd@gmail.com)
+| link:mailto:someboringnerd@gmail.com[SomeBoringNerd]
 
 | Projet-IHM-Plaque
 | Logiciel en c++, créé via QTCreator, pour que l'utilisateur puisse acceder aux caméras de surveillance, un accès a la base de donnée, ainsi que des options vis-a-vis de la grille
-| songok4rio (discord.gg)
+| link:https://discord.com[songok4rio]
 
 | LED-Controller-master
 | permet a un RaspBerry PI de controller un système de LED Matrix
-| Hergo (https://twitch.tv/hergooooo)
+| link:https://twitch.tv/hergooooo[Hergo]
 
 | wsServer / ToyWS
 | Librairie pour créer des connexions websocket entre un serveur et client que nous avons forké pour nos besoins.
-| https://github.com/Theldus
+| link:https://github.com/Theldus[Theldus]
 
 
 |===
